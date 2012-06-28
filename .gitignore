@@ -1,0 +1,14 @@
+*.swp
+
+#Local data stored by plugins (history etc.)
+local
+.netrwhist
+
+#Hax. :/
+doc/tags
+*/doc/tags
+*/*/doc/tags
+*/*/*/doc/tags
+*/*/*/*/doc/tags
+*/*/*/*/*/doc/tags
+*/*/*/*/*/*/doc/tags

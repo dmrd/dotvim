@@ -1,0 +1,5 @@
+Install:
+git clone git://github.com/dmrd/dotvim.git ~/.vim
+
+Also link ~/.vimrc and ~/.gvimrc to ~/.vim/vimrc
+	ln -s ~/.vim/vimrc ~/.vimrc
