@@ -1,21 +1,12 @@
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "bundle/omnicppcomplete"]
-	path = bundle/omnicppcomplete
-	url = http://github.com/MasterKey/OmniCppComplete.git
 [submodule "bundle/supertab"]
 	path = bundle/supertab
-	url = http://github.com/ervandew/supertab.git
-[submodule "bundle/taglist"]
-	path = bundle/taglist
-	url = http://github.com/bronson/vim-taglist.git
-[submodule "bundle/command-t"]
-	path = bundle/command-t
-	url = git://git.wincent.com/command-t.git
+	url = https://github.com/ervandew/supertab.git
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
-	url = http://github.com/tpope/vim-fugitive.git
+	url = https://github.com/tpope/vim-fugitive.git
 [submodule "bundle/surround"]
 	path = bundle/surround
 	url = https://github.com/tpope/vim-surround.git
@@ -25,18 +16,6 @@
 [submodule "bundle/repeat"]
 	path = bundle/repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "bundle/vim-ruby"]
-	path = bundle/vim-ruby
-	url = https://github.com/vim-ruby/vim-ruby.git
-[submodule "bundle/vim-rails"]
-	path = bundle/vim-rails
-	url = https://github.com/tpope/vim-rails.git
-[submodule "bundle/clang_complete"]
-	path = bundle/clang_complete
-	url = https://github.com/Rip-Rip/clang_complete.git
-[submodule "nerdtree"]
-	path = nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
 [submodule "bundle/nerdcommenter"]
 	path = bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
@@ -49,3 +28,15 @@
 [submodule "bundle/rainbow"]
 	path = bundle/rainbow
 	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "bundle/slime"]
+	path = bundle/slime
+	url = https://github.com/jpalardy/vim-slime.git
+[submodule "bundle/python-mode"]
+	path = bundle/python-mode
+	url = https://github.com/klen/python-mode.git
+[submodule "bundle/ctrlp"]
+	path = bundle/ctrlp
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "bundle/powerline"]
+	path = bundle/powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
