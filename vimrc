@@ -3,6 +3,7 @@
 
 "Init -----------------------------------------------{{{ 
 filetype off
+let g:pathogen_disabled = ['command_t']
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 set nocompatible "It's not vi!
@@ -31,15 +32,13 @@ set autoindent
 set showmode
 set showcmd
 set hidden
-set wildmenu
-set wildmode=list:longest
 set visualbell
 set cursorline
 set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
-set relativenumber
+set number
 
 " Don't try to highlight lines longer than 500 characters.
 set synmaxcol=500
@@ -72,6 +71,27 @@ au FocusLost * :silent! wall
 au VimResized * :wincmd =
 
 
+" Change cdir to current file location
+"   Mainly for ctrlp 
+set autochdir
+
+" }}}
+
+" Wildmenu ---------------------------------------------{{{
+
+set wildmenu
+set wildmode=list:longest
+
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.pyc                            " Python byte code
+set wildignore+=*~
+set wildignore+=*/.vim/tmp/*
+
 " }}}
 
 " Search -----------------------------------------------{{{
@@ -86,8 +106,8 @@ set showmatch
 set hlsearch
 set wrapscan
 nnoremap <leader><space> :noh<cr>
-nnoremap <tab> %
-vnoremap <tab> %
+"nnoremap <tab> %
+"vnoremap <tab> %
 
 
 " }}}
@@ -106,7 +126,7 @@ set noswapfile                    " It's 2012, Vim.
 
 " Folding -----------------------------------------------{{{
 set foldenable
-set foldlevelstart=0
+set foldlevelstart=100
 
 " Space to toggle folds.
 nnoremap <Space> za
@@ -121,22 +141,25 @@ nnoremap z0 zCz0
 " These commands open folds
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
-let g:FoldMethod=0
-map <leader>f :call ToggleFold()<cr>
+"Default fold method
+setlocal foldmethod=marker 
 
-fun! ToggleFold()
-    if g:FoldMethod == 0
-        exe 'setlocal foldmethod=indent'
-        let g:FoldMethod = 1
-    else if g:FoldMethod == 1
-        exe 'setlocal foldmethod=marker'
-        let g:FoldMethod = 2
-    else if g:FoldMethod == 2
-        exe 'setlocal foldmethod=syntax'
-        let g:FoldMethod = 0
-    endif
-    redraw!
-endfun
+"let g:FoldMethod=0
+"map <leader>f :call ToggleFold()<cr>
+
+"fun! ToggleFold()
+"    if g:FoldMethod == 0
+"        setlocal foldmethod=indent
+"        let g:FoldMethod = 1
+"    elseif g:FoldMethod == 1
+"        setlocal foldmethod=marker
+"        let g:FoldMethod = 2
+"    elseif g:FoldMethod == 2
+"        setlocal foldmethod=syntax
+"        let g:FoldMethod = 0
+"    endif
+"    redraw!
+"endfun
 " }}}
 
 " Leader stuff:  -----------------------------------------------{{{
@@ -147,10 +170,9 @@ set ttimeout
 set ttimeoutlen=10
 set showcmd
 
-
 ""Clear whitespace
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR> 
-nnoremap <leader>a :Ack
+nnoremap <leader>A :Ack
  "Hardwrap a paragraph
 nnoremap <leader>q gqip
   "Reselect pasted text
@@ -166,7 +188,7 @@ nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <leader><tab> :Scratch<cr>
 "
 "Open NERDTree
-nnoremap <leader>n :NERDTree<cr>
+nnoremap <leader>n :NERDTreeToggle<cr>
 
 "Toggle rainbow parens
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
@@ -183,8 +205,12 @@ nnoremap <leader>la :setlocal number!<cr>
 "Color -----------------------------------------------{{{
 "Get some color in here
 syntax on
+
+set t_Co=256
 if &t_Co >= 256 || has("gui_running")
-	colorscheme zenburn
+"        colorscheme peaksea
+colorscheme zenburn
+"        colorscheme molokai
 endif
 " }}}
 
@@ -200,27 +226,71 @@ map <F2> :bnext<CR>
 map <C-n> :bnext<CR>
 " }}}
 
-" Misc mappings and settings {{{
+
+" Misc mappings and settings ---------------------------- {{{
+
+" For local replace
+nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
+
+" For global replace
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+
 nnoremap <silent> <F3> :YRShow<cr>
 inoremap <silent> <F3> <ESC>:YRShow<cr>
 
+"Gundo
+nnoremap <F5> :GundoToggle<CR>
+
+
+"command-t entirely in vim script
+nnoremap <leader>t :ctrlp
+
+"my [to]do list in each file
+map <Leader>d <Plug>TaskList
+
+" alignment plugin
+nmap <leader>a= :Tabularize /=<cr>
+vmap <leader>a= :Tabularize /=<cr>
+nmap <leader>a: :Tabularize /:\zs<cr>
+vmap <leader>a: :tabularize /:\zs<cr>
+
+
+let g:slime_target = "tmux"
+
+" when to enable large file plugin
+let g:largefile=10
+
+"Yankring location
+let g:yankring_history_dir="~/.vim/tmp"
+
+map <F9> :TlistToggle<cr>
+
 map <F12> :make -j5 CXX="ccache g++"
 
-set wcm=<C-Z>
-
-map <F4> :emenu <C-Z>
+"set cpo-=<
+"set wcm=<C-Z>
+"map <F4> :emenu <C-Z>
 
 "Nerdtree if no arguments given
 "autocmd vimenter * if !argc() | NERDTree | endif
+
+
 " }}}
 
 
-"Language bindings {{{
+"Language bindings --------------------------------------- {{{
 
-" C/++ {{{
+" C {{{
 augroup ft_c
     au!
     au FileType c setlocal foldmethod=syntax
+augroup END
+" }}}
+
+" Cpp {{{
+augroup ft_cpp
+    au!
+    au FileType cpp setlocal foldmethod=syntax
 augroup END
 " }}}
 
@@ -229,9 +299,12 @@ augroup ft_haskell
     au!
     au BufEnter *.hs compiler ghc
 augroup END
+let g:haddock_browser = "chromium"
+let g:ghc = "/usr/bin/ghc"
+
 " }}}
 
-" Java {{{"{{{
+" Java {{{
 augroup ft_java
     au!
     au FileType java setlocal foldmethod=marker
@@ -252,7 +325,7 @@ augroup END
     augroup ft_python
         au!
         au FileType python setlocal foldmethod=indent
-        au Filetype python setlocal foldnextmax=2
+        au Filetype python setlocal foldnestmax=2
 " }}}
 
 " Vim {{{
