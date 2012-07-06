@@ -3,7 +3,6 @@
 
 "Init -----------------------------------------------{{{ 
 filetype off
-let g:pathogen_disabled = ['command_t']
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 set nocompatible "It's not vi!
@@ -51,7 +50,7 @@ set completeopt=longest,menuone,preview
 set wrap
 set textwidth=79
 set formatoptions=qrn1
-set colorcolumn=85
+set colorcolumn=80
 set noscrollbind "Do not scroll windows together
 
 set mouse=a "HERESY!
@@ -63,7 +62,9 @@ set listchars=tab:▸\ ,eol:¬
 "Move by screen line
 nnoremap j gj
 nnoremap k gk
-
+"gj/k now move by logical line
+nnoremap gj j
+nnoremap gk k
 " Save when losing focus
 au FocusLost * :silent! wall
 
@@ -96,6 +97,7 @@ set wildignore+=*/.vim/tmp/*
 
 " Search -----------------------------------------------{{{
 
+"Because everyone loves real regex search
 nnoremap / /\v
 vnoremap / /\v
 set ignorecase
@@ -106,9 +108,10 @@ set showmatch
 set hlsearch
 set wrapscan
 nnoremap <leader><space> :noh<cr>
+
+"Commented out because tab is autocomplete/snipmate/supertab
 "nnoremap <tab> %
 "vnoremap <tab> %
-
 
 " }}}
 
@@ -120,12 +123,13 @@ set undodir=~/.vim/tmp/undo//     " undo files
 set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap//   " swap files
 set backup                        " enable backups
-set noswapfile                    " It's 2012, Vim.
+set noswapfile                    " It's 2012, Vim. I haz version control
 
 "}}}
 
 " Folding -----------------------------------------------{{{
 set foldenable
+"Start unfolded
 set foldlevelstart=100
 
 " Space to toggle folds.
@@ -144,6 +148,7 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 "Default fold method
 setlocal foldmethod=marker 
 
+"I should actually learn vimscript...
 "let g:FoldMethod=0
 "map <leader>f :call ToggleFold()<cr>
 
@@ -163,19 +168,22 @@ setlocal foldmethod=marker
 " }}}
 
 " Leader stuff:  -----------------------------------------------{{{
+"My fingers are lazy
 let mapleader = ','
 nnoremap ; :
+
+"Should find out exactly what these do
 set notimeout
 set ttimeout
 set ttimeoutlen=10
 set showcmd
 
-""Clear whitespace
+""Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR> 
 nnoremap <leader>A :Ack
- "Hardwrap a paragraph
+"Hardwrap a paragraph
 nnoremap <leader>q gqip
-  "Reselect pasted text
+"Reselect pasted text
 nnoremap <leader>v V`]
 "Open vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr> 
@@ -190,11 +198,14 @@ nnoremap <leader><tab> :Scratch<cr>
 "Open NERDTree
 nnoremap <leader>n :NERDTreeToggle<cr>
 
-"Toggle rainbow parens
+"Toggle rainbow parens - Should make more vibrant
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
 
-"Paste from outside into terminal
-nnoremap <leader>p :r!xclip -o<cr>
+"Paste from X into terminal
+"nnoremap <c-v> :r!xclip -o<cr>
+"Nevermind!  Do:
+"to paste: "+p or "*p
+"to copy:  "+yy or "*yy
 
 "Toggle line numbers
 nnoremap <leader>lr :setlocal relativenumber!<cr>
@@ -208,9 +219,9 @@ syntax on
 
 set t_Co=256
 if &t_Co >= 256 || has("gui_running")
-"        colorscheme peaksea
-colorscheme zenburn
-"        colorscheme molokai
+    "        colorscheme peaksea
+    colorscheme zenburn
+    "        colorscheme molokai
 endif
 " }}}
 
@@ -221,14 +232,16 @@ map <C-h> <C-w>h
 map <C-l> <C-w>l
 
 map <F1> :bprevious<CR>
+"Overidden by yankring
 map <C-p> :bprevious<CR>
 map <F2> :bnext<CR>
 map <C-n> :bnext<CR>
 " }}}
 
-
 " Misc mappings and settings ---------------------------- {{{
 
+
+"TODO: Should find out more about these two
 " For local replace
 nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
 
@@ -254,7 +267,7 @@ vmap <leader>a= :Tabularize /=<cr>
 nmap <leader>a: :Tabularize /:\zs<cr>
 vmap <leader>a: :tabularize /:\zs<cr>
 
-
+"TODO: Learn how to properly use this for Haskell
 let g:slime_target = "tmux"
 
 " when to enable large file plugin
@@ -276,7 +289,6 @@ map <F12> :make -j5 CXX="ccache g++"
 
 
 " }}}
-
 
 "Language bindings --------------------------------------- {{{
 
@@ -301,7 +313,6 @@ augroup ft_haskell
 augroup END
 let g:haddock_browser = "chromium"
 let g:ghc = "/usr/bin/ghc"
-
 " }}}
 
 " Java {{{
@@ -318,21 +329,20 @@ augroup ft_javascript
     au FileType javascript setlocal foldmethod=marker
     au FileType javascript setlocal foldmarker={,}
 augroup END
-
 " }}}
 
 " Python {{{
-    augroup ft_python
-        au!
-        au FileType python setlocal foldmethod=indent
-        au Filetype python setlocal foldnestmax=2
-" }}}
-
-" Vim {{{
-augroup ft_vim
+augroup ft_python
     au!
-    au FileType vim setlocal foldmethod=marker
-    au FileType help setlocal textwidth=78
-augroup END
-" }}}
-" }}}
+    au FileType python setlocal foldmethod=indent
+    au Filetype python setlocal foldnestmax=2
+    " }}}
+
+    " Vim {{{
+    augroup ft_vim
+        au!
+        au FileType vim setlocal foldmethod=marker
+        au FileType help setlocal textwidth=78
+    augroup END
+    " }}}
+    " }}}
