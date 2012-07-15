@@ -237,7 +237,8 @@ if &t_Co > 255
             hi Ignore          ctermfg=238
         endif
     else
-        hi Normal ctermfg=188 " ctermbg=237
+        " Comment out ctermbg=237 to allow transparency
+        hi Normal ctermfg=188 "ctermbg=237
         hi Cursor          ctermbg=109
         hi diffadd         ctermbg=237
         hi diffdelete      ctermbg=238

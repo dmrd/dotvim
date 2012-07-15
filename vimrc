@@ -180,7 +180,8 @@ set showcmd
 
 ""Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR> 
-nnoremap <leader>A :Ack
+nnoremap <leader>a :Ack
+nnoremap <leader>g :grep 
 "Hardwrap a paragraph
 nnoremap <leader>q gqip
 "Reselect pasted text
