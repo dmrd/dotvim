@@ -1,3 +1,5 @@
 *.swp
 *.un
+*.~
 local
+tmp/*/*
