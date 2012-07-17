@@ -1,7 +1,7 @@
 "dmrd vimrc
 "Frankensteined from the internet.  Large parts from Steve Losh
 
-"Init -----------------------------------------------{{{ 
+"Init -----------------------------------------------{{{
 filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -73,7 +73,7 @@ au VimResized * :wincmd =
 
 
 " Change cdir to current file location
-"   Mainly for ctrlp 
+"   Mainly for ctrlp
 set autochdir
 
 " }}}
@@ -151,7 +151,7 @@ nnoremap z0 zCz0
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 "Default fold method
-setlocal foldmethod=marker 
+setlocal foldmethod=marker
 
 "I should actually learn vimscript...
 "let g:FoldMethod=0
@@ -183,20 +183,22 @@ set ttimeout
 set ttimeoutlen=10
 set showcmd
 
-""Clear whitespace in file
-nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR> 
+"Clear whitespace in file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 nnoremap <leader>a :Ack
-nnoremap <leader>g :grep 
+"Servers without Ack
+nnoremap <leader>g :grep
 "Hardwrap a paragraph
 nnoremap <leader>q gqip
 "Reselect pasted text
 nnoremap <leader>v V`]
 "Open vimrc
-nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr> 
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<CR>
 "Who types jj in normal text anyways?
-inoremap jj <ESC> 
+inoremap jj <ESC>
 "Open a new vertical split
-nnoremap <leader>w <C-w>v<C-w>l 
+nnoremap <leader>w <C-w>v<C-w>l
 
 "Scratch buffer
 nnoremap <leader><tab> :Scratch<cr>
@@ -217,7 +219,7 @@ nnoremap <leader>R :RainbowParenthesesToggle<cr>
 nnoremap <leader>lr :setlocal relativenumber!<cr>
 nnoremap <leader>la :setlocal number!<cr>
 
-" }}} 
+" }}}
 
 "Color -----------------------------------------------{{{
 "Get some color in here
@@ -283,7 +285,7 @@ let g:largefile=10
 "Yankring location
 let g:yankring_history_dir="~/.vim/tmp"
 
-map <F9> :TlistToggle<cr>
+map <F9> :TagbarToggle<cr>
 
 map <F12> :make -j5 CXX="ccache g++"
 

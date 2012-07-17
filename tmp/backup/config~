@@ -3,23 +3,59 @@
 	filemode = true
 	bare = false
 	logallrefupdates = true
-[submodule "bundle/nerdtree"]
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "bundle/nerdcommenter"]
-	url = https://github.com/scrooloose/nerdcommenter.git
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = https://github.com/dmrd/dotvim.git
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[submodule "bundle/slime"]
+	url = https://github.com/jpalardy/vim-slime.git
+[submodule "bundle/fugitive"]
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "bundle/python-mode"]
+	url = https://github.com/klen/python-mode.git
+[submodule "bundle/supertab"]
+	url = https://github.com/ervandew/supertab.git
 [submodule "bundle/ack"]
 	url = https://github.com/mileszs/ack.vim.git
+[submodule "bundle/nerdcommenter"]
+	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/nerdtree"]
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "bundle/rainbow"]
+	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule "bundle/repeat"]
+	url = https://github.com/tpope/vim-repeat.git
 [submodule "bundle/snipmate"]
 	url = https://github.com/msanders/snipmate.vim.git
 [submodule "bundle/surround"]
 	url = https://github.com/tpope/vim-surround.git
-[submodule "."]
-	url = https://github.com/tpope/vim-repeat.git
-[submodule "bundle/rainbow"]
-	url = https://github.com/kien/rainbow_parentheses.vim.git
-[remote "origin"]
-	url = https://github.com/dmrd/dotvim.git
-	fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
+[submodule "bundle/ctrlp"]
+	url = https://github.com/kien/ctrlp.vim.git
+[submodule "bundle/minibufexpl"]
+	url = https://github.com/fholgado/minibufexpl.vim.git
+[submodule "bundle/syntastic"]
+	url = https://github.com/scrooloose/syntastic.git
+[submodule "bundle/taglist"]
+	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule "bundle/omnicppcomplete"]
+	url = https://github.com/vim-scripts/OmniCppComplete.git
+[submodule "bundle/tasklist"]
+	url = https://github.com/vim-scripts/TaskList.vim.git
+[submodule "bundle/gundo"]
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "bundle/unimpaired"]
+	url = https://github.com/tpope/vim-unimpaired.git
+[submodule "bundle/tabular"]
+	url = https://github.com/godlygeek/tabular.git
+[submodule "bundle/haskellmode"]
+	url = https://github.com/lukerandall/haskellmode-vim.git
+[submodule "bundle/yankring"]
+	url = https://github.com/vim-scripts/YankRing.vim.git
+[submodule "bundle/largefile"]
+	url = https://github.com/vim-scripts/LargeFile.git
+[submodule "bundle/powerline"]
+	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "bundle/tagbar"]
+	url = https://github.com/majutsushi/tagbar.git
