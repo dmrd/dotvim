@@ -78,6 +78,11 @@ set autochdir
 
 " }}}
 
+" Tags ----------------------------------------------- {{{
+set tags+=~/vim/commontags
+set tags+=./tags;
+" }}}
+
 " Wildmenu ---------------------------------------------{{{
 
 set wildmenu
@@ -180,7 +185,8 @@ set showcmd
 
 ""Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR> 
-nnoremap <leader>A :Ack
+nnoremap <leader>a :Ack
+nnoremap <leader>g :grep 
 "Hardwrap a paragraph
 nnoremap <leader>q gqip
 "Reselect pasted text
@@ -236,6 +242,7 @@ map <F1> :bprevious<CR>
 map <C-p> :bprevious<CR>
 map <F2> :bnext<CR>
 map <C-n> :bnext<CR>
+
 " }}}
 
 " Misc mappings and settings ---------------------------- {{{
@@ -292,6 +299,7 @@ map <F12> :make -j5 CXX="ccache g++"
 
 "Language bindings --------------------------------------- {{{
 
+au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 " C {{{
 augroup ft_c
     au!
@@ -303,6 +311,7 @@ augroup END
 augroup ft_cpp
     au!
     au FileType cpp setlocal foldmethod=syntax
+    " set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
 augroup END
 " }}}
 

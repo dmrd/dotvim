@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/dmrd/.vim/bundle/ctrlp/autoload/ctrlp'
+let g:netrw_dirhist_2='/home/dmrd/.vim/bundle/scratch/plugin'
+let g:netrw_dirhist_3='/home/dmrd/.vim/bundle/scratch'
+let g:netrw_dirhist_4='/home/dmrd/Development/code/caprica/google-juice/cpp/robot'
+let g:netrw_dirhist_5='/usr/include/boost/filesystem'
+let g:netrw_dirhist_6='/mnt/data/Dropbox/todo'
