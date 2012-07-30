@@ -9,8 +9,7 @@ set nocompatible "It's not vi!
 " }}}
 
 " Basic options -----------------------------------------------{{{
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 set encoding=utf-8
 set modelines=0
@@ -102,7 +101,7 @@ set wildignore+=*/.vim/tmp/*
 
 " Search -----------------------------------------------{{{
 
-"Because everyone loves real regex search
+"Because everyone loves real regex search (Or, as vim puts it, VERY MAGICAL)
 nnoremap / /\v
 vnoremap / /\v
 set ignorecase
@@ -176,8 +175,9 @@ setlocal foldmethod=marker
 "My fingers are lazy
 let mapleader = ','
 nnoremap ; :
+vnoremap ; :
 
-"Should find out exactly what these do
+"Command sanity
 set notimeout
 set ttimeout
 set ttimeoutlen=10
@@ -185,20 +185,21 @@ set showcmd
 
 "Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-nnoremap <leader>a :Ack
+nnoremap <leader>a :Ack 
 "Servers without Ack
-nnoremap <leader>g :grep
+nnoremap <leader>g :grep 
 "Hardwrap a paragraph
-nnoremap <leader>q gqip
+"nnoremap <leader>q gqip
 "Reselect pasted text
 nnoremap <leader>v V`]
 "Open vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<CR>
-"Who types jj in normal text anyways?
-inoremap jj <ESC>
+"Who types jk in normal text anyways?
+inoremap jk <ESC>
 "Open a new vertical split
 nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>q <C-w>s<C-w>j
 
 "Scratch buffer
 nnoremap <leader><tab> :Scratch<cr>
@@ -285,6 +286,8 @@ let g:largefile=10
 "Yankring location
 let g:yankring_history_dir="~/.vim/tmp"
 
+"Prefer Taglist for multiple files, Tagbar more useful for single files
+map <F8> :TlistToggle<cr>
 map <F9> :TagbarToggle<cr>
 
 map <F12> :make -j5 CXX="ccache g++"
@@ -356,4 +359,24 @@ augroup ft_python
         au FileType help setlocal textwidth=78
     augroup END
     " }}}
+
+    " Org stuff {{{
+    au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
+    au BufEnter *.org            call org#SetOrgFileType()
+    let g:org_command_for_emacsclient = 'emacsclient'
+    
+    let g:org_capture_file = '/mnt/data/Dropbox/org/captures.org'
+    command! OrgCapture :call org#CaptureBuffer()
+    command! OrgCaptureFile :call org#OpenCaptureFile()
+
+    let g:org_agenda_select_dirs = ["/mnt/data/Dropbox/org/"]
+    let g:org_agenda_files = split(glob("/mnt/data/Dropbox/org/*.org"),"\n")
+    let g:org_agenda_window_position = 'right'
+
+    nnoremap <leader>c :OrgCapture<cr>
+    nnoremap <leader>o :OrgCaptureFile<cr>
+    au BufEnter *.org :1SpeedDatingFormat %Y-%m-%d %a
+    " }}}
+
+
     " }}}

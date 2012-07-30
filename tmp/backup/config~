@@ -37,8 +37,6 @@
 	url = https://github.com/fholgado/minibufexpl.vim.git
 [submodule "bundle/syntastic"]
 	url = https://github.com/scrooloose/syntastic.git
-[submodule "bundle/taglist"]
-	url = https://github.com/vim-scripts/taglist.vim.git
 [submodule "bundle/omnicppcomplete"]
 	url = https://github.com/vim-scripts/OmniCppComplete.git
 [submodule "bundle/tasklist"]
@@ -59,3 +57,15 @@
 	url = https://github.com/Lokaltog/vim-powerline.git
 [submodule "bundle/tagbar"]
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "bundle/taglist"]
+	url = https://github.com/vim-scripts/taglist.vim.git
+[submodule "bundle/calendar"]
+	url = https://github.com/vim-scripts/calendar.vim--Matsumoto.git
+[submodule "bundle/NrrwRgn"]
+	url = https://github.com/chrisbra/NrrwRgn.git
+[submodule "bundle/utl"]
+	url = https://github.com/vim-scripts/utl.vim.git
+[submodule "bundle/speeddating"]
+	url = https://github.com/tpope/vim-speeddating.git
+[submodule "bundle/VimOrganizer"]
+	url = https://github.com/rmsilva/VimOrganizer.git

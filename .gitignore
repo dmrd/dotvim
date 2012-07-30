@@ -3,5 +3,6 @@
 *.~
 local
 tmp/*
+tmp/*
 tags/*
 .netrwhist
