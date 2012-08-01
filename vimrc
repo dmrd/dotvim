@@ -226,7 +226,7 @@ nnoremap <leader>la :setlocal number!<cr>
 "Get some color in here
 syntax on
 
-set t_Co=256
+"set t_Co=256
 if &t_Co >= 256 || has("gui_running")
     "        colorscheme peaksea
     colorscheme zenburn
@@ -267,6 +267,10 @@ nnoremap <F5> :GundoToggle<CR>
 
 "command-t entirely in vim script
 nnoremap <leader>t :ctrlp
+let g:ctrlp_use_caching = 1
+"Keep caches between sessions
+let g:ctrlp_clear_cache_on_exit = 0
+
 
 "my [to]do list in each file
 map <Leader>d <Plug>TaskList
@@ -376,6 +380,13 @@ augroup ft_python
     nnoremap <leader>c :OrgCapture<cr>
     nnoremap <leader>o :OrgCaptureFile<cr>
     au BufEnter *.org :1SpeedDatingFormat %Y-%m-%d %a
+
+    "This is rather buggy...
+    let g:org_mobile_directory = ["mnt/data/Dropbox/org/mobile"]
+    let g:org_mobile_files = ["mnt/data/Dropbox/main.org"]
+    let g:org_mobile_inbox_for_pull = ["mnt/data/Dropbox/org/mobile/from-mobile.org"]
+
+
     " }}}
 
 

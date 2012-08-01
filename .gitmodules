@@ -88,3 +88,6 @@
 [submodule "bundle/VimOrganizerMobile"]
 	path = bundle/VimOrganizerMobile
 	url = https://github.com/rmsilva/VimOrganizer.git
+[submodule "bundle/csapprox"]
+	path = bundle/csapprox
+	url = https://github.com/vim-scripts/CSApprox.git
