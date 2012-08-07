@@ -3,6 +3,7 @@
 
 "Init -----------------------------------------------{{{
 filetype off
+let g:pathogen_disabled = ["python-mode"]
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 set nocompatible "It's not vi!
@@ -203,7 +204,7 @@ nnoremap <leader>q <C-w>s<C-w>j
 
 "Scratch buffer
 nnoremap <leader><tab> :Scratch<cr>
-"
+
 "Open NERDTree
 nnoremap <leader>n :NERDTreeToggle<cr>
 
@@ -231,6 +232,7 @@ if &t_Co >= 256 || has("gui_running")
     "        colorscheme peaksea
     colorscheme zenburn
     "        colorscheme molokai
+    let g:CSApprox_konsole = 1
 endif
 " }}}
 
@@ -276,10 +278,8 @@ let g:ctrlp_clear_cache_on_exit = 0
 map <Leader>d <Plug>TaskList
 
 " alignment plugin
-nmap <leader>a= :Tabularize /=<cr>
-vmap <leader>a= :Tabularize /=<cr>
-nmap <leader>a: :Tabularize /:\zs<cr>
-vmap <leader>a: :tabularize /:\zs<cr>
+nmap <leader>a= :Tab assignment<cr>
+vmap <leader>a= :Tab assignment<cr>
 
 "TODO: Learn how to properly use this for Haskell
 let g:slime_target = "tmux"
@@ -308,7 +308,7 @@ map <F12> :make -j5 CXX="ccache g++"
 
 "Language bindings --------------------------------------- {{{
 
-au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
+au BufWritePost *.c,*.cpp,*.h,*.hpp silent! !ctags -R &
 " C {{{
 augroup ft_c
     au!
@@ -380,7 +380,6 @@ augroup ft_python
     nnoremap <leader>c :OrgCapture<cr>
     nnoremap <leader>o :OrgCaptureFile<cr>
     au BufEnter *.org :1SpeedDatingFormat %Y-%m-%d %a
-
     "This is rather buggy...
     let g:org_mobile_directory = ["mnt/data/Dropbox/org/mobile"]
     let g:org_mobile_files = ["mnt/data/Dropbox/main.org"]
