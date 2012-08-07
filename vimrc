@@ -124,10 +124,10 @@ nnoremap <leader><space> :noh<cr>
 
 set undofile
 set undoreload=100000
-set undodir=~/.vim/tmp/undo//     " undo files
+set undodir=~/.vim/tmp/undo//     " undo files - this I DO need
 set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap//   " swap files
-set backup                        " enable backups
+set backup                        " enable backups - may not be really needed
 set noswapfile                    " It's 2012, Vim. I haz version control
 
 "}}}
@@ -141,7 +141,7 @@ set foldlevelstart=100
 nnoremap <Space> za
 vnoremap <Space> za
 
-"Refocus folds
+"Refocus folds - close all folds, open current
 nnoremap ,z zMzvzz
 
 "Recursively open current top level fold
@@ -150,7 +150,7 @@ nnoremap z0 zCz0
 " These commands open folds
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
-"Default fold method
+"Default fold method --- use the three braces ({{{  }}})
 setlocal foldmethod=marker
 
 "I should actually learn vimscript...
@@ -186,7 +186,8 @@ set showcmd
 
 "Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-nnoremap <leader>a :Ack 
+"Ack is beautiful with quickfix window
+nnoremap <leader>a :Ack
 "Servers without Ack
 nnoremap <leader>g :grep 
 "Hardwrap a paragraph
@@ -197,9 +198,11 @@ nnoremap <leader>v V`]
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 "Who types jk in normal text anyways?
+"Also, remember TODO remap capslock to esc
 inoremap jk <ESC>
 "Open a new vertical split
 nnoremap <leader>w <C-w>v<C-w>l
+"Horizontal split
 nnoremap <leader>q <C-w>s<C-w>j
 
 "Scratch buffer
@@ -217,7 +220,7 @@ nnoremap <leader>R :RainbowParenthesesToggle<cr>
 "to paste: "+p or "*p
 "to copy:  "+yy or "*yy
 
-"Toggle line numbers
+"Toggle line numbers - relative good for jumping
 nnoremap <leader>lr :setlocal relativenumber!<cr>
 nnoremap <leader>la :setlocal number!<cr>
 
@@ -232,7 +235,6 @@ if &t_Co >= 256 || has("gui_running")
     "        colorscheme peaksea
     colorscheme zenburn
     "        colorscheme molokai
-    let g:CSApprox_konsole = 1
 endif
 " }}}
 
@@ -246,6 +248,7 @@ map <F1> :bprevious<CR>
 "Overidden by yankring
 map <C-p> :bprevious<CR>
 map <F2> :bnext<CR>
+"Ditto on yankring
 map <C-n> :bnext<CR>
 
 " }}}
@@ -253,7 +256,8 @@ map <C-n> :bnext<CR>
 " Misc mappings and settings ---------------------------- {{{
 
 
-"TODO: Should find out more about these two
+"TODO: Should find out more about these two - basically hacky local refactor
+" Limited usage
 " For local replace
 nnoremap gr gd[{V%:s/<C-R>///gc<left><left><left>
 
@@ -264,13 +268,13 @@ nnoremap <silent> <F3> :YRShow<cr>
 inoremap <silent> <F3> <ESC>:YRShow<cr>
 
 "Gundo
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <F4> :GundoToggle<CR>
 
 
 "command-t entirely in vim script
-nnoremap <leader>t :ctrlp
+nnoremap <leader>t :CtrlP<cr>
 let g:ctrlp_use_caching = 1
-"Keep caches between sessions
+"Keep caches between sessions - f5 to refresh
 let g:ctrlp_clear_cache_on_exit = 0
 
 
@@ -308,6 +312,7 @@ map <F12> :make -j5 CXX="ccache g++"
 
 "Language bindings --------------------------------------- {{{
 
+"Generate ctags when saving c/cpp files
 au BufWritePost *.c,*.cpp,*.h,*.hpp silent! !ctags -R &
 " C {{{
 augroup ft_c
