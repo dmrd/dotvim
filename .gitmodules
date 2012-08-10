@@ -88,3 +88,6 @@
 [submodule "bundle/VimOrganizerMobile"]
 	path = bundle/VimOrganizerMobile
 	url = https://github.com/rmsilva/VimOrganizer.git
+[submodule "bundle/lusty"]
+	path = bundle/lusty
+	url = https://github.com/sjbach/lusty.git

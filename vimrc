@@ -21,22 +21,35 @@ syntax on
 "Allow hidden buffers
 set hidden
 
+"Number of spaces a tab ('\t') is shown as
 set tabstop=8
+"Number spaces to use per step of autoindent (<< >> cindent)
 set shiftwidth=4
+"Number of spaces pressing tab inserts
 set softtabstop=4
+"Presing tab inserts spaces
 set expandtab
 
+"Scroll up or down when # lines away from edge
 set scrolloff=3
 set autoindent
 set showmode
 set showcmd
-set hidden
+"I hate beeping so much.  This flashes the screen for ~20-40 msec
 set visualbell
+"Highlight current screen line
 set cursorline
+"Increases smoothness - fast terminal
 set ttyfast
+"Show current line/column in statusbar
 set ruler
-set backspace=indent,eol,start
+"Can backspace over autoindents, linebreaks (join lines), and start of insert
+"without start means no backspacing except through what was just inserted.
+"Must use x/d/some other method in such cases
+set backspace=indent,eol,start "Same as set backspace=2
+"Every window has a status line
 set laststatus=2
+"Line numbers - can set relative/absolute style
 set number
 
 " Don't try to highlight lines longer than 500 characters.
@@ -45,17 +58,27 @@ set synmaxcol=500
 " do not redraw while running macros (much faster) (LazyRedraw)
 set lazyredraw
 " Better Completion
-set completeopt=longest,menuone,preview
+set completeopt=longest,menu,menuone,preview
 
+"Wrap text to fit on screen
 set wrap
+"Break lines at whitespace after # characters
 set textwidth=79
+"q: allow formatting comments with gq
+"r: auto insert comment leader on newline
+"n: detect numbered lists
+"1: Don't break line after 1 letter words
 set formatoptions=qrn1
+"Highlight the column, match with max line length
 set colorcolumn=80
-set noscrollbind "Do not scroll windows together
+"Do not scroll windows together
+set noscrollbind
 
+"Enable mouse, hide mouse when typing in gvim
 set mouse=a "HERESY!
 set mousehide
 
+"Special characters for tab and eol
 set list
 set listchars=tab:▸\ ,eol:¬
 
@@ -79,15 +102,18 @@ set autochdir
 " }}}
 
 " Tags ----------------------------------------------- {{{
+"Check these directories for tag files
 set tags+=~/vim/commontags
 set tags+=./tags;
 " }}}
 
 " Wildmenu ---------------------------------------------{{{
 
+"Command completion - list all matches, match to longest string
 set wildmenu
 set wildmode=list:longest
 
+"Ignore all of this
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
@@ -107,7 +133,7 @@ nnoremap / /\v
 vnoremap / /\v
 set ignorecase
 set smartcase
-set gdefault "Global substitute by default
+set gdefault "Global substitute by default - put /g to change to first in line
 set incsearch
 set showmatch
 set hlsearch
@@ -187,7 +213,7 @@ set showcmd
 "Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 "Ack is beautiful with quickfix window
-nnoremap <leader>a :Ack
+nnoremap <leader>a :Ack 
 "Servers without Ack
 nnoremap <leader>g :grep 
 "Hardwrap a paragraph
@@ -232,8 +258,9 @@ syntax on
 
 "set t_Co=256
 if &t_Co >= 256 || has("gui_running")
-    "        colorscheme peaksea
     colorscheme zenburn
+    "        colorscheme peaksea
+    "        colorscheme moria
     "        colorscheme molokai
 endif
 " }}}
@@ -251,6 +278,12 @@ map <F2> :bnext<CR>
 "Ditto on yankring
 map <C-n> :bnext<CR>
 
+"Useful plugin for fast switching - default ,lj
+"nnoremap <Leader>b LustyJuggler<cr>
+"Disable default mappings for LustyJuggler/Explorer
+"I do not use explorer, so no new mappings for it
+"let g:LustyJugglerDefaultMappings=0
+let g:LustyExplorerDefaultMappings=0
 " }}}
 
 " Misc mappings and settings ---------------------------- {{{
@@ -288,8 +321,8 @@ vmap <leader>a= :Tab assignment<cr>
 "TODO: Learn how to properly use this for Haskell
 let g:slime_target = "tmux"
 
-" when to enable large file plugin
-let g:largefile=10
+" when to enable large file plugin in MB
+let g:LargeFile=10
 
 "Yankring location
 let g:yankring_history_dir="~/.vim/tmp"
@@ -359,21 +392,23 @@ augroup ft_python
     au!
     au FileType python setlocal foldmethod=indent
     au Filetype python setlocal foldnestmax=2
-    " }}}
+augroup END
+" }}}
 
-    " Vim {{{
-    augroup ft_vim
-        au!
-        au FileType vim setlocal foldmethod=marker
-        au FileType help setlocal textwidth=78
-    augroup END
-    " }}}
+" Vim {{{
+augroup ft_vim
+    au!
+    au FileType vim setlocal foldmethod=marker
+    au FileType help setlocal textwidth=78
+augroup END
+" }}}
 
-    " Org stuff {{{
+" Org stuff {{{
+augroup ft_org
     au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
     au BufEnter *.org            call org#SetOrgFileType()
     let g:org_command_for_emacsclient = 'emacsclient'
-    
+
     let g:org_capture_file = '/mnt/data/Dropbox/org/captures.org'
     command! OrgCapture :call org#CaptureBuffer()
     command! OrgCaptureFile :call org#OpenCaptureFile()
@@ -389,9 +424,9 @@ augroup ft_python
     let g:org_mobile_directory = ["mnt/data/Dropbox/org/mobile"]
     let g:org_mobile_files = ["mnt/data/Dropbox/main.org"]
     let g:org_mobile_inbox_for_pull = ["mnt/data/Dropbox/org/mobile/from-mobile.org"]
+augroup END
+
+" }}}
 
 
-    " }}}
-
-
-    " }}}
+" }}}
