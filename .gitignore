@@ -4,8 +4,3 @@
 bundle/*
 !bundle/vundle/
 local
-tmp/*
-tmp/*
-tags/*
-sessions/*
-.netrwhist
