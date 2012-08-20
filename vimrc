@@ -2,11 +2,65 @@
 "Frankensteined from the internet.  Large parts from Steve Losh
 
 "Init -----------------------------------------------{{{
-filetype off
-let g:pathogen_disabled = ["python-mode"]
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
 set nocompatible "It's not vi!
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" Github repos
+
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+Bundle 'bkad/CamelCaseMotion'
+Bundle 'chrisbra/NrrwRgn'
+Bundle 'ervandew/supertab'
+Bundle 'fholgado/minibufexpl.vim'
+Bundle 'godlygeek/tabular'
+Bundle 'hsitz/VimOrganizer'
+Bundle 'jcf/vim-latex'
+Bundle 'kien/ctrlp.vim'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'kikijump/tslime.vim'
+"Bundle 'klen/python-mode'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'mileszs/ack.vim'
+Bundle 'msanders/snipmate.vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+
+" Unite
+"Bundle 'h1mesuke/unite-outline'
+"Bundle 'Shougo/unite.vim'
+"
+Bundle 'sjbach/lusty'
+Bundle 'sjl/gundo.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'xolox/vim-easytags'
+let g:easytags_updatetime_autodisable=1
+Bundle 'xolox/vim-session'
+Bundle 'xuhdev/SingleCompile'
+
+" Vim-scripts
+Bundle 'LargeFile'
+Bundle 'OmniCppComplete'
+Bundle 'TaskList.vim'
+Bundle 'utl.vim'
+Bundle 'YankRing.vim'
+Bundle 'ZoomWin'
+Bundle 'scratch.vim'
+
 " }}}
 
 " Basic options -----------------------------------------------{{{
@@ -14,6 +68,8 @@ filetype plugin indent on
 
 set encoding=utf-8
 set modelines=0
+
+set updatetime=4000
 
 "Misc settings for usability
 
@@ -29,14 +85,15 @@ set shiftwidth=4
 set softtabstop=4
 "Presing tab inserts spaces
 set expandtab
+"set smarttab
 
 "Scroll up or down when # lines away from edge
 set scrolloff=3
 set autoindent
 set showmode
 set showcmd
-"I hate beeping so much.  This flashes the screen for ~20-40 msec
-set visualbell
+"No flashing.
+set novisualbell
 "Highlight current screen line
 set cursorline
 "Increases smoothness - fast terminal
@@ -179,25 +236,6 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 "Default fold method --- use the three braces ({{{  }}})
 setlocal foldmethod=marker
 
-"I should actually learn vimscript...
-"let g:FoldMethod=0
-"map <leader>f :call ToggleFold()<cr>
-
-"fun! ToggleFold()
-"    if g:FoldMethod == 0
-"        setlocal foldmethod=indent
-"        let g:FoldMethod = 1
-"    elseif g:FoldMethod == 1
-"        setlocal foldmethod=marker
-"        let g:FoldMethod = 2
-"    elseif g:FoldMethod == 2
-"        setlocal foldmethod=syntax
-"        let g:FoldMethod = 0
-"    endif
-"    redraw!
-"endfun
-" }}}
-
 " Leader stuff:  -----------------------------------------------{{{
 "My fingers are lazy
 let mapleader = ','
@@ -223,6 +261,11 @@ nnoremap <leader>v V`]
 "Open vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+nnoremap <leader>ss :SaveSession 
+nnoremap <leader>so :OpenSession 
+
+
 "Who types jk in normal text anyways?
 "Also, remember TODO remap capslock to esc
 inoremap jk <ESC>
@@ -239,6 +282,10 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 
 "Toggle rainbow parens - Should make more vibrant
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
+
+" Outline all buffers
+nnoremap <leader>uo :Unite outline<cr>
+nnoremap <leader>uu :Unite 
 
 "Paste from X into terminal
 "nnoremap <c-v> :r!xclip -o<cr>
@@ -320,6 +367,7 @@ vmap <leader>a= :Tab assignment<cr>
 
 "TODO: Learn how to properly use this for Haskell
 let g:slime_target = "tmux"
+"let g:slime_target = "screen"
 
 " when to enable large file plugin in MB
 let g:LargeFile=10
@@ -327,9 +375,12 @@ let g:LargeFile=10
 "Yankring location
 let g:yankring_history_dir="~/.vim/tmp"
 
-"Prefer Taglist for multiple files, Tagbar more useful for single files
-map <F8> :TlistToggle<cr>
-map <F9> :TagbarToggle<cr>
+" <F9>
+" <F10>
+" Used for singlecompile
+
+"Tagbar for tag navigation
+map <F11> :TagbarToggle<cr>
 
 map <F12> :make -j5 CXX="ccache g++"
 
@@ -345,8 +396,6 @@ map <F12> :make -j5 CXX="ccache g++"
 
 "Language bindings --------------------------------------- {{{
 
-"Generate ctags when saving c/cpp files
-au BufWritePost *.c,*.cpp,*.h,*.hpp silent! !ctags -R &
 " C {{{
 augroup ft_c
     au!
