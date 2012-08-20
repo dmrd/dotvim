@@ -470,9 +470,9 @@ augroup ft_org
     nnoremap <leader>o :OrgCaptureFile<cr>
     au BufEnter *.org :1SpeedDatingFormat %Y-%m-%d %a
     "This is rather buggy...
-    let g:org_mobile_directory = ["mnt/data/Dropbox/org/mobile"]
-    let g:org_mobile_files = ["mnt/data/Dropbox/main.org"]
-    let g:org_mobile_inbox_for_pull = ["mnt/data/Dropbox/org/mobile/from-mobile.org"]
+    let g:org_mobile_directory = ["/mnt/data/Dropbox/org/mobile"]
+    let g:org_mobile_files = ["/mnt/data/Dropbox/main.org"]
+    let g:org_mobile_inbox_for_pull = ["/mnt/data/Dropbox/org/mobile/from-mobile.org"]
 augroup END
 
 " }}}
