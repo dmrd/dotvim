@@ -7,7 +7,7 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" Github repos
+" Github repos ------------------------------------{{{
 
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
@@ -15,52 +15,94 @@ map <silent> e <Plug>CamelCaseMotion_e
 sunmap w
 sunmap b
 sunmap e
+"Package management
+Bundle 'vundle'
+"w,e,b operate on camelCaseText
 Bundle 'bkad/CamelCaseMotion'
+"Break out region into its own buffer. Changes transfer back
 Bundle 'chrisbra/NrrwRgn'
+"Completion from other words in buffer
 Bundle 'ervandew/supertab'
+"Essentially a tab vew for buffers (not the same as the built in tabs)
 Bundle 'fholgado/minibufexpl.vim'
+"Aligning code
 Bundle 'godlygeek/tabular'
+"Interface to emacs org-mode
 Bundle 'hsitz/VimOrganizer'
+"Latex plugin
 Bundle 'jcf/vim-latex'
+"Like command-T but uses only vimscript
 Bundle 'kien/ctrlp.vim'
+"Color matching parens various colors
+"Limited usability, may get rid of
 Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'kikijump/tslime.vim'
+"Bundle 'kikijump/tslime.vim'
 "Bundle 'klen/python-mode'
+"Jumping long distances - ,,w/e/b
 Bundle 'Lokaltog/vim-easymotion'
+"Cool status bar
 Bundle 'Lokaltog/vim-powerline'
+"Haskell stuff
 Bundle 'lukerandall/haskellmode-vim'
+"Tags
 Bundle 'majutsushi/tagbar'
+"Ack integration
 Bundle 'mileszs/ack.vim'
-Bundle 'msanders/snipmate.vim'
+"Like snipmate but better
+Bundle 'SirVer/ultisnips'
+",c* comments stuff in/out
 Bundle 'scrooloose/nerdcommenter'
+"File explorer
 Bundle 'scrooloose/nerdtree'
+"Automatic syntax/code checker
 Bundle 'scrooloose/syntastic'
+let g:syntastic_auto_loc_list=1
+"tmux interaction
+"Bundle 'benmills/vimux'
 
 " Unite
 "Bundle 'h1mesuke/unite-outline'
 "Bundle 'Shougo/unite.vim'
-"
+",lj will allow jumping to to buffers easily
 Bundle 'sjbach/lusty'
+"Undo tree visualizer
 Bundle 'sjl/gundo.vim'
+"Git integration
 Bundle 'tpope/vim-fugitive'
+"Lets . repeat more types of commands
 Bundle 'tpope/vim-repeat'
+"Increment/decrement dates
 Bundle 'tpope/vim-speeddating'
+"Operate on surrounding symbols (like change parens to brackets)
 Bundle 'tpope/vim-surround'
+"Random functions. [e ]e switch lines (stuff like that)
 Bundle 'tpope/vim-unimpaired'
-Bundle 'xolox/vim-easytags'
-let g:easytags_updatetime_autodisable=1
-Bundle 'xolox/vim-session'
+"Check to make this is working properly and not updating too often
+"Bundle 'xolox/vim-easytags'
+"let g:easytags_updatetime_autodisable=1
+"Bundle 'xolox/vim-session'
+"Build a single file. Very easy to use without make
 Bundle 'xuhdev/SingleCompile'
+" }}}
 
-" Vim-scripts
+" Vim-scripts------------------------------------ {{{
+"Makes Vim work better with large files
 Bundle 'LargeFile'
+"Cpp completion
 Bundle 'OmniCppComplete'
+",d will pull up all lines with TODO
 Bundle 'TaskList.vim'
+"Plugin to create links
 Bundle 'utl.vim'
+"Clipboard manager
 Bundle 'YankRing.vim'
+"<c-w>o to toggle "zooming into" a window
 Bundle 'ZoomWin'
+",<tab> opens scratch buffer
 Bundle 'scratch.vim'
-
+"Calendar in vim
+Bundle 'calendar.vim'
+" }}} 
 " }}}
 
 " Basic options -----------------------------------------------{{{
@@ -197,7 +239,7 @@ set hlsearch
 set wrapscan
 nnoremap <leader><space> :noh<cr>
 
-"Commented out because tab is autocomplete/snipmate/supertab
+"Commented out because tab is autocomplete/ultisnip/supertab
 "nnoremap <tab> %
 "vnoremap <tab> %
 
@@ -235,6 +277,8 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 "Default fold method --- use the three braces ({{{  }}})
 setlocal foldmethod=marker
+
+" }}}
 
 " Leader stuff:  -----------------------------------------------{{{
 "My fingers are lazy
@@ -299,9 +343,11 @@ nnoremap <leader>la :setlocal number!<cr>
 
 " }}}
 
-"Color -----------------------------------------------{{{
+"Appearances -----------------------------------------------{{{
 "Get some color in here
 syntax on
+
+set guifont=Inconsolata\ Medium\ 12
 
 "set t_Co=256
 if &t_Co >= 256 || has("gui_running")
@@ -335,6 +381,8 @@ let g:LustyExplorerDefaultMappings=0
 
 " Misc mappings and settings ---------------------------- {{{
 
+" Write as sudo
+cmap w!! w !sudo tee % >/dev/null
 
 "TODO: Should find out more about these two - basically hacky local refactor
 " Limited usage
@@ -350,13 +398,12 @@ inoremap <silent> <F3> <ESC>:YRShow<cr>
 "Gundo
 nnoremap <F4> :GundoToggle<CR>
 
-
 "command-t entirely in vim script
 nnoremap <leader>t :CtrlP<cr>
 let g:ctrlp_use_caching = 1
 "Keep caches between sessions - f5 to refresh
 let g:ctrlp_clear_cache_on_exit = 0
-
+"let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
 
 "my [to]do list in each file
 map <Leader>d <Plug>TaskList
@@ -375,8 +422,8 @@ let g:LargeFile=10
 "Yankring location
 let g:yankring_history_dir="~/.vim/tmp"
 
-" <F9>
-" <F10>
+nmap <F9> :SingleCompile<CR>
+nmap <F10> :SingleCompileRun<CR>
 " Used for singlecompile
 
 "Tagbar for tag navigation
