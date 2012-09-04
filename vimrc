@@ -1,5 +1,6 @@
 "dmrd vimrc
 "Frankensteined from the internet.  Large parts from Steve Losh
+"Could use some reorganization
 
 "Init -----------------------------------------------{{{
 set nocompatible "It's not vi!
@@ -9,12 +10,6 @@ call vundle#rc()
 
 " Github repos ------------------------------------{{{
 
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
 "Package management
 Bundle 'vundle'
 "w,e,b operate on camelCaseText
@@ -31,8 +26,13 @@ Bundle 'godlygeek/tabular'
 Bundle 'hsitz/VimOrganizer'
 "Latex plugin
 Bundle 'jcf/vim-latex'
+
 "Like command-T but uses only vimscript
 Bundle 'kien/ctrlp.vim'
+let g:ctrlp_use_caching = 1
+"Keep caches between sessions - f5 to refresh
+let g:ctrlp_clear_cache_on_exit = 0
+
 "Color matching parens various colors
 "Limited usability, may get rid of
 Bundle 'kien/rainbow_parentheses.vim'
@@ -58,7 +58,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 let g:syntastic_auto_loc_list=1
 "tmux interaction
-"Bundle 'benmills/vimux'
+Bundle 'benmills/vimux'
 
 " Unite
 "Bundle 'h1mesuke/unite-outline'
@@ -105,7 +105,7 @@ Bundle 'calendar.vim'
 " }}} 
 " }}}
 
-" Basic options -----------------------------------------------{{{
+" Basic options & behaviors -----------------------------------------------{{{
 filetype plugin indent on
 
 set encoding=utf-8
@@ -238,11 +238,6 @@ set showmatch
 set hlsearch
 set wrapscan
 nnoremap <leader><space> :noh<cr>
-
-"Commented out because tab is autocomplete/ultisnip/supertab
-"nnoremap <tab> %
-"vnoremap <tab> %
-
 " }}}
 
 "backup stuff -----------------------------------------------{{{
@@ -280,7 +275,7 @@ setlocal foldmethod=marker
 
 " }}}
 
-" Leader stuff:  -----------------------------------------------{{{
+" Leader stuff & nonplugin leader mappings --------------------------------{{{
 "My fingers are lazy
 let mapleader = ','
 nnoremap ; :
@@ -294,42 +289,23 @@ set showcmd
 
 "Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
-"Ack is beautiful with quickfix window
-nnoremap <leader>a :Ack 
-"Servers without Ack
-nnoremap <leader>g :grep 
-"Hardwrap a paragraph
-"nnoremap <leader>q gqip
+
 "Reselect pasted text
 nnoremap <leader>v V`]
+
 "Open vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
-nnoremap <leader>ss :SaveSession 
-nnoremap <leader>so :OpenSession 
-
-
 "Who types jk in normal text anyways?
 "Also, remember TODO remap capslock to esc
 inoremap jk <ESC>
+
 "Open a new vertical split
 nnoremap <leader>w <C-w>v<C-w>l
+
 "Horizontal split
 nnoremap <leader>q <C-w>s<C-w>j
-
-"Scratch buffer
-nnoremap <leader><tab> :Scratch<cr>
-
-"Open NERDTree
-nnoremap <leader>n :NERDTreeToggle<cr>
-
-"Toggle rainbow parens - Should make more vibrant
-nnoremap <leader>R :RainbowParenthesesToggle<cr>
-
-" Outline all buffers
-nnoremap <leader>uo :Unite outline<cr>
-nnoremap <leader>uu :Unite 
 
 "Paste from X into terminal
 "nnoremap <c-v> :r!xclip -o<cr>
@@ -379,7 +355,7 @@ map <C-n> :bnext<CR>
 let g:LustyExplorerDefaultMappings=0
 " }}}
 
-" Misc mappings and settings ---------------------------- {{{
+" Misc & mappings ---------------------------- {{{
 
 " Write as sudo
 cmap w!! w !sudo tee % >/dev/null
@@ -400,9 +376,6 @@ nnoremap <F4> :GundoToggle<CR>
 
 "command-t entirely in vim script
 nnoremap <leader>t :CtrlP<cr>
-let g:ctrlp_use_caching = 1
-"Keep caches between sessions - f5 to refresh
-let g:ctrlp_clear_cache_on_exit = 0
 "let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
 
 "my [to]do list in each file
@@ -431,6 +404,32 @@ map <F11> :TagbarToggle<cr>
 
 map <F12> :make -j5 CXX="ccache g++"
 
+nnoremap <leader>ss :SaveSession 
+nnoremap <leader>so :OpenSession 
+
+"Ack is awesome with quickfix window
+nnoremap <leader>a :Ack 
+
+"Scratch buffer
+nnoremap <leader><tab> :Scratch<cr>
+
+"Open NERDTree
+nnoremap <leader>n :NERDTreeToggle<cr>
+
+"Toggle rainbow parens - Should make more vibrant
+nnoremap <leader>R :RainbowParenthesesToggle<cr>
+
+" Outline all buffers
+nnoremap <leader>uo :Unite outline<cr>
+nnoremap <leader>uu :Unite 
+
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+
 "set cpo-=<
 "set wcm=<C-Z>
 "map <F4> :emenu <C-Z>
@@ -438,6 +437,34 @@ map <F12> :make -j5 CXX="ccache g++"
 "Nerdtree if no arguments given
 "autocmd vimenter * if !argc() | NERDTree | endif
 
+" Vimux {{{
+" Prompt for a command to run
+nmap <leader>rp :PromptVimTmuxCommand<CR>
+
+" Run last command executed by RunVimTmuxCommand
+nmap <leader>rl :RunLastVimTmuxCommand<CR>
+
+" Close all other tmux panes in current window
+nmap <leader>rx :CloseVimTmuxPanes<CR>
+
+" Kill any command running in the runner pane
+map <leader>rk :InterruptVimTmuxRunner<CR>
+
+" If text is selected, save it in the v buffer and send to tmux
+vmap <Leader>rs "vy:call VimuxRunCommand(@v . "\n", 0)<CR>
+
+" Select current paragraph and send it to tmux
+nmap <Leader>rs vip<Leader>rs<CR>
+" }}}
+
+" Fugitive {{{
+let g:extradite_width = 60
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gg :Ggrep 
+nmap <leader>gl :Extradite!<CR>
+nmap <leader>gd :Gdiff<CR>
+nmap <silent> <C-\> :Ggrep <cword><CR>:copen<CR>
+" }}}
 
 " }}}
 
