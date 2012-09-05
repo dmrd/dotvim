@@ -2,5 +2,6 @@
 *.un
 *.~
 bundle/*
-!bundle/vundle/
+!bundle/vundle
+!bundle/vundle/*
 local
