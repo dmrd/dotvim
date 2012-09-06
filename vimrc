@@ -1,6 +1,5 @@
 "dmrd vimrc
 "Frankensteined from the internet.  Large parts from Steve Losh
-"Could use some reorganization
 
 "Init -----------------------------------------------{{{
 set nocompatible "It's not vi!
@@ -287,11 +286,14 @@ set ttimeout
 set ttimeoutlen=10
 set showcmd
 
+"save file
+nnoremap <leader>w :w<CR>
+
 "Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 
 "Reselect pasted text
-nnoremap <leader>v V`]
+nnoremap <leader>p V`]
 
 "Open vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
@@ -302,10 +304,10 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 inoremap jk <ESC>
 
 "Open a new vertical split
-nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>v <C-w>v<C-w>l
 
 "Horizontal split
-nnoremap <leader>q <C-w>s<C-w>j
+nnoremap <leader>h <C-w>s<C-w>j
 
 "Paste from X into terminal
 "nnoremap <c-v> :r!xclip -o<cr>
@@ -327,10 +329,12 @@ set guifont=Inconsolata\ Medium\ 12
 
 "set t_Co=256
 if &t_Co >= 256 || has("gui_running")
-    colorscheme zenburn
-    "        colorscheme peaksea
-    "        colorscheme moria
-    "        colorscheme molokai
+    try
+        colorscheme zenburn
+        "        colorscheme peaksea
+        "        colorscheme moria
+        "        colorscheme molokai
+    endtry
 endif
 " }}}
 
@@ -497,7 +501,7 @@ let g:ghc = "/usr/bin/ghc"
 " Java {{{
 augroup ft_java
     au!
-    au FileType java setlocal foldmethod=marker
+    au FileType java setlocal foldmethod=syntax
     au FileType java setlocal foldmarker={,}
 augroup END
 " }}}
@@ -505,7 +509,7 @@ augroup END
 " Javascript {{{
 augroup ft_javascript
     au!
-    au FileType javascript setlocal foldmethod=marker
+    au FileType javascript setlocal foldmethod=syntax
     au FileType javascript setlocal foldmarker={,}
 augroup END
 " }}}
@@ -528,6 +532,7 @@ augroup END
 
 " Org stuff {{{
 augroup ft_org
+    "Need emacs --daemon running
     au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
     au BufEnter *.org            call org#SetOrgFileType()
     let g:org_command_for_emacsclient = 'emacsclient'
