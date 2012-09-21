@@ -36,7 +36,7 @@ let g:ctrlp_clear_cache_on_exit = 0
 "Limited usability, may get rid of
 Bundle 'kien/rainbow_parentheses.vim'
 "Bundle 'kikijump/tslime.vim'
-"Bundle 'klen/python-mode'
+Bundle 'klen/python-mode'
 "Jumping long distances - ,,w/e/b
 Bundle 'Lokaltog/vim-easymotion'
 "Cool status bar
@@ -77,11 +77,13 @@ Bundle 'tpope/vim-surround'
 "Random functions. [e ]e switch lines (stuff like that)
 Bundle 'tpope/vim-unimpaired'
 "Check to make this is working properly and not updating too often
-"Bundle 'xolox/vim-easytags'
+Bundle 'xolox/vim-easytags'
 "let g:easytags_updatetime_autodisable=1
 "Bundle 'xolox/vim-session'
 "Build a single file. Very easy to use without make
 Bundle 'xuhdev/SingleCompile'
+"ocaml stuff
+"Bundle 'jrk/vim-ocaml'
 " }}}
 
 " Vim-scripts------------------------------------ {{{
@@ -101,6 +103,7 @@ Bundle 'ZoomWin'
 Bundle 'scratch.vim'
 "Calendar in vim
 Bundle 'calendar.vim'
+
 " }}} 
 " }}}
 
@@ -302,6 +305,7 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 "Who types jk in normal text anyways?
 "Also, remember TODO remap capslock to esc
 inoremap jk <ESC>
+inoremap kj <ESC>
 
 "Open a new vertical split
 nnoremap <leader>v <C-w>v<C-w>l
@@ -374,12 +378,18 @@ nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 
 nnoremap <silent> <F3> :YRShow<cr>
 inoremap <silent> <F3> <ESC>:YRShow<cr>
+xmap <F3> <Plug>NrrwrgnDo
 
 "Gundo
 nnoremap <F4> :GundoToggle<CR>
 
 "command-t entirely in vim script
-nnoremap <leader>t :CtrlP<cr>
+"Search files - [F]ind
+nnoremap <leader>f :CtrlPMixed<cr>
+"Switch [b]uffers
+nnoremap <Leader>b :CtrlPBuffer<cr>
+"Goto [t]ag
+nnoremap <Leader>t :CtrlPBufTagAll<cr>
 "let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
 
 "my [to]do list in each file
@@ -535,6 +545,7 @@ augroup ft_org
     "Need emacs --daemon running
     au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
     au BufEnter *.org            call org#SetOrgFileType()
+    au FileType org              set spell
     let g:org_command_for_emacsclient = 'emacsclient'
 
     let g:org_capture_file = '/mnt/data/Dropbox/org/captures.org'
@@ -545,8 +556,8 @@ augroup ft_org
     let g:org_agenda_files = split(glob("/mnt/data/Dropbox/org/*.org"),"\n")
     let g:org_agenda_window_position = 'right'
 
-    nnoremap <leader>c :OrgCapture<cr>
-    nnoremap <leader>o :OrgCaptureFile<cr>
+    "nnoremap <leader>c :OrgCapture<cr>
+    "nnoremap <leader>o :OrgCaptureFile<cr>
     au BufEnter *.org :1SpeedDatingFormat %Y-%m-%d %a
     "This is rather buggy...
     let g:org_mobile_directory = ["/mnt/data/Dropbox/org/mobile"]
@@ -554,6 +565,13 @@ augroup ft_org
     let g:org_mobile_inbox_for_pull = ["/mnt/data/Dropbox/org/mobile/from-mobile.org"]
 augroup END
 
+" ocaml {{{
+augroup ft_ocaml
+    call SingleCompile#SetCompilerTemplate('ocaml', 'ocamlc', 'OCaml Bytecode Compiler',
+                \'ocamlc', '-o $(FILE_TITLE)$', '')
+augroup END
+
+" }}}
 " }}}
 
 
