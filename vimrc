@@ -17,7 +17,9 @@ Bundle 'bkad/CamelCaseMotion'
 Bundle 'chrisbra/NrrwRgn'
 "Completion from other words in buffer
 Bundle 'ervandew/supertab'
-"Essentially a tab vew for buffers (not the same as the built in tabs)
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+
+"Essentially a tab view for buffers (not the same as the built in tabs)
 Bundle 'fholgado/minibufexpl.vim'
 "Aligning code
 Bundle 'godlygeek/tabular'
@@ -25,6 +27,9 @@ Bundle 'godlygeek/tabular'
 Bundle 'hsitz/VimOrganizer'
 "Latex plugin
 Bundle 'jcf/vim-latex'
+"Prevents latex plugin from rebinding C-j
+imap <m-J> <Plug>IMAP_JumpForward
+nmap <m-J> <Plug>IMAP_JumpForward
 
 "Like command-T but uses only vimscript
 Bundle 'kien/ctrlp.vim'
@@ -66,6 +71,8 @@ Bundle 'benmills/vimux'
 Bundle 'sjbach/lusty'
 "Undo tree visualizer
 Bundle 'sjl/gundo.vim'
+" Extends fugitive
+Bundle 'int3/vim-extradite'
 "Git integration
 Bundle 'tpope/vim-fugitive'
 "Lets . repeat more types of commands
@@ -82,8 +89,9 @@ Bundle 'xolox/vim-easytags'
 "Bundle 'xolox/vim-session'
 "Build a single file. Very easy to use without make
 Bundle 'xuhdev/SingleCompile'
-"ocaml stuff
-"Bundle 'jrk/vim-ocaml'
+"Time tracking
+Bundle 'rainerborene/vim-timetap'
+
 " }}}
 
 " Vim-scripts------------------------------------ {{{
@@ -103,7 +111,8 @@ Bundle 'ZoomWin'
 Bundle 'scratch.vim'
 "Calendar in vim
 Bundle 'calendar.vim'
-
+"Java completion
+Bundle 'javacomplete'
 " }}} 
 " }}}
 
@@ -193,7 +202,7 @@ nnoremap gk k
 au FocusLost * :silent! wall
 
 " Resize splits when the window is resized
-au VimResized * :wincmd =
+"au VimResized * :wincmd =
 
 
 " Change cdir to current file location
@@ -330,16 +339,33 @@ nnoremap <leader>la :setlocal number!<cr>
 syntax on
 
 set guifont=Inconsolata\ Medium\ 12
+" Remove toolbar
+set guioptions-=T
+" Remove menu
+set guioptions-=m
+" Remove right scrollbar
+set guioptions-=r
+set guioptions-=R
+" Remove left scrollbar
+set guioptions-=l
+set guioptions-=L
 
 "set t_Co=256
-if &t_Co >= 256 || has("gui_running")
+if has("gui_running")
     try
-        colorscheme zenburn
+        colorscheme solarized
+        "colorscheme zenburn
+        "colorscheme wombat
         "        colorscheme peaksea
         "        colorscheme moria
         "        colorscheme molokai
     endtry
-endif
+else
+    "Terminal colorscheme
+    try
+        colorscheme zenburn
+    endtry
+end
 " }}}
 
 "Buffer navigation -----------------------------------------------{{{
@@ -418,6 +444,7 @@ map <F11> :TagbarToggle<cr>
 
 map <F12> :make -j5 CXX="ccache g++"
 
+" xolox/vim-session
 nnoremap <leader>ss :SaveSession 
 nnoremap <leader>so :OpenSession 
 
@@ -474,6 +501,7 @@ nmap <Leader>rs vip<Leader>rs<CR>
 " Fugitive {{{
 let g:extradite_width = 60
 nmap <leader>gs :Gstatus<CR>
+nmap <leader>gc :Gcommit<CR>
 nmap <leader>gg :Ggrep 
 nmap <leader>gl :Extradite!<CR>
 nmap <leader>gd :Gdiff<CR>
@@ -513,6 +541,7 @@ augroup ft_java
     au!
     au FileType java setlocal foldmethod=syntax
     au FileType java setlocal foldmarker={,}
+    au FileType java setlocal omnifunc=javacomplete#Complete
 augroup END
 " }}}
 
