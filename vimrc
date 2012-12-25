@@ -13,11 +13,11 @@ call vundle#rc()
 Bundle 'vundle'
 "w,e,b operate on camelCaseText
 Bundle 'bkad/CamelCaseMotion'
-"Break out region into its own buffer. Changes transfer back
+"Break out region into its own buffer. Changes transfer back - f3
 Bundle 'chrisbra/NrrwRgn'
 "Completion from other words in buffer
 Bundle 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabDefaultCompletionType='<c-x><c-u><c-p>'
 
 "Essentially a tab view for buffers (not the same as the built in tabs)
 Bundle 'fholgado/minibufexpl.vim'
@@ -27,6 +27,7 @@ Bundle 'godlygeek/tabular'
 Bundle 'hsitz/VimOrganizer'
 "Latex plugin
 Bundle 'jcf/vim-latex'
+"Bundle 'AutomaticLaTexPlugin'
 "Prevents latex plugin from rebinding C-j
 imap <m-J> <Plug>IMAP_JumpForward
 nmap <m-J> <Plug>IMAP_JumpForward
@@ -38,38 +39,38 @@ let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
 
 "Color matching parens various colors
-"Limited usability, may get rid of
+"Limited usability, may get rid of  - ,R
 Bundle 'kien/rainbow_parentheses.vim'
 "Bundle 'kikijump/tslime.vim'
-Bundle 'klen/python-mode'
+"Bundle 'klen/python-mode'
 "Jumping long distances - ,,w/e/b
 Bundle 'Lokaltog/vim-easymotion'
 "Cool status bar
 Bundle 'Lokaltog/vim-powerline'
 "Haskell stuff
-Bundle 'lukerandall/haskellmode-vim'
-"Tags
+"Bundle 'lukerandall/haskellmode-vim'
+"Tags - f11
 Bundle 'majutsushi/tagbar'
-"Ack integration
+"Ack integration   -  ,a
 Bundle 'mileszs/ack.vim'
 "Like snipmate but better
 Bundle 'SirVer/ultisnips'
-",c* comments stuff in/out
+",c* comments stuff in/out   ,c...
 Bundle 'scrooloose/nerdcommenter'
-"File explorer
+"File explorer   - ,n
 Bundle 'scrooloose/nerdtree'
-"Automatic syntax/code checker
+"Automatic syntax/code checker - checks on write
 Bundle 'scrooloose/syntastic'
 let g:syntastic_auto_loc_list=1
 "tmux interaction
-Bundle 'benmills/vimux'
+"Bundle 'benmills/vimux'
 
 " Unite
 "Bundle 'h1mesuke/unite-outline'
 "Bundle 'Shougo/unite.vim'
-",lj will allow jumping to to buffers easily
+"Allow jumping to to buffers easily - ,lj - ,lj
 Bundle 'sjbach/lusty'
-"Undo tree visualizer
+"Undo tree visualizer  - f4
 Bundle 'sjl/gundo.vim'
 " Extends fugitive
 Bundle 'int3/vim-extradite'
@@ -77,20 +78,22 @@ Bundle 'int3/vim-extradite'
 Bundle 'tpope/vim-fugitive'
 "Lets . repeat more types of commands
 Bundle 'tpope/vim-repeat'
-"Increment/decrement dates
-Bundle 'tpope/vim-speeddating'
+"Increment/decrement dates - again, limited use cases
+"Bundle 'tpope/vim-speeddating'
 "Operate on surrounding symbols (like change parens to brackets)
 Bundle 'tpope/vim-surround'
 "Random functions. [e ]e switch lines (stuff like that)
 Bundle 'tpope/vim-unimpaired'
 "Check to make this is working properly and not updating too often
 Bundle 'xolox/vim-easytags'
+let g:easytags_file = "~/.vim/tags/easyTags"
+let g:easytags_dynamic_files = 1
 "let g:easytags_updatetime_autodisable=1
 "Bundle 'xolox/vim-session'
-"Build a single file. Very easy to use without make
+"Build a single file. Very easy to use without make. Awesome plugin! - f9, f10
 Bundle 'xuhdev/SingleCompile'
 "Time tracking
-Bundle 'rainerborene/vim-timetap'
+"Bundle 'rainerborene/vim-timetap'
 
 " }}}
 
@@ -98,7 +101,7 @@ Bundle 'rainerborene/vim-timetap'
 "Makes Vim work better with large files
 Bundle 'LargeFile'
 "Cpp completion
-Bundle 'OmniCppComplete'
+"Bundle 'OmniCppComplete'
 ",d will pull up all lines with TODO
 Bundle 'TaskList.vim'
 "Plugin to create links
@@ -112,7 +115,7 @@ Bundle 'scratch.vim'
 "Calendar in vim
 Bundle 'calendar.vim'
 "Java completion
-Bundle 'javacomplete'
+"Bundle 'javacomplete'
 " }}} 
 " }}}
 
@@ -168,7 +171,9 @@ set synmaxcol=500
 " do not redraw while running macros (much faster) (LazyRedraw)
 set lazyredraw
 " Better Completion
-set completeopt=longest,menu,menuone,preview
+set pumheight=10
+set completeopt=menu,longest,preview  "longest,menu,menuone,preview
+let g:SuperTabDefaultCompletionType='context'
 
 "Wrap text to fit on screen
 set wrap
@@ -213,8 +218,8 @@ set autochdir
 
 " Tags ----------------------------------------------- {{{
 "Check these directories for tag files
-set tags+=~/vim/commontags
-set tags+=./tags;
+set tags=./tags;
+set tags+=~/vim/tags/;
 " }}}
 
 " Wildmenu ---------------------------------------------{{{
@@ -259,7 +264,8 @@ set undodir=~/.vim/tmp/undo//     " undo files - this I DO need
 set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap//   " swap files
 set backup                        " enable backups - may not be really needed
-set noswapfile                    " It's 2012, Vim. I haz version control
+set noswapfile                    " It's 2012, Vim. I haz version control. And
+                                  "     a backup folder
 
 "}}}
 
@@ -426,7 +432,7 @@ nmap <leader>a= :Tab assignment<cr>
 vmap <leader>a= :Tab assignment<cr>
 
 "TODO: Learn how to properly use this for Haskell
-let g:slime_target = "tmux"
+"let g:slime_target = "tmux"
 "let g:slime_target = "screen"
 
 " when to enable large file plugin in MB
@@ -445,8 +451,8 @@ map <F11> :TagbarToggle<cr>
 map <F12> :make -j5 CXX="ccache g++"
 
 " xolox/vim-session
-nnoremap <leader>ss :SaveSession 
-nnoremap <leader>so :OpenSession 
+"nnoremap <leader>ss :SaveSession 
+"nnoremap <leader>so :OpenSession 
 
 "Ack is awesome with quickfix window
 nnoremap <leader>a :Ack 
@@ -461,9 +467,10 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
 
 " Outline all buffers
-nnoremap <leader>uo :Unite outline<cr>
-nnoremap <leader>uu :Unite 
+"nnoremap <leader>uo :Unite outline<cr>
+"nnoremap <leader>uu :Unite 
 
+"common word movements work on camel case words
 map <silent> w <Plug>CamelCaseMotion_w
 map <silent> b <Plug>CamelCaseMotion_b
 map <silent> e <Plug>CamelCaseMotion_e
@@ -479,24 +486,24 @@ sunmap e
 "autocmd vimenter * if !argc() | NERDTree | endif
 
 " Vimux {{{
-" Prompt for a command to run
-nmap <leader>rp :PromptVimTmuxCommand<CR>
+"" Prompt for a command to run
+"nmap <leader>rp :PromptVimTmuxCommand<CR>
 
-" Run last command executed by RunVimTmuxCommand
-nmap <leader>rl :RunLastVimTmuxCommand<CR>
+"" Run last command executed by RunVimTmuxCommand
+"nmap <leader>rl :RunLastVimTmuxCommand<CR>
 
-" Close all other tmux panes in current window
-nmap <leader>rx :CloseVimTmuxPanes<CR>
+"" Close all other tmux panes in current window
+"nmap <leader>rx :CloseVimTmuxPanes<CR>
 
-" Kill any command running in the runner pane
-map <leader>rk :InterruptVimTmuxRunner<CR>
+"" Kill any command running in the runner pane
+"map <leader>rk :InterruptVimTmuxRunner<CR>
 
-" If text is selected, save it in the v buffer and send to tmux
-vmap <Leader>rs "vy:call VimuxRunCommand(@v . "\n", 0)<CR>
+"" If text is selected, save it in the v buffer and send to tmux
+"vmap <Leader>rs "vy:call VimuxRunCommand(@v . "\n", 0)<CR>
 
-" Select current paragraph and send it to tmux
-nmap <Leader>rs vip<Leader>rs<CR>
-" }}}
+"" Select current paragraph and send it to tmux
+"nmap <Leader>rs vip<Leader>rs<CR>
+"" }}}
 
 " Fugitive {{{
 let g:extradite_width = 60
@@ -541,7 +548,7 @@ augroup ft_java
     au!
     au FileType java setlocal foldmethod=syntax
     au FileType java setlocal foldmarker={,}
-    au FileType java setlocal omnifunc=javacomplete#Complete
+    "au FileType java setlocal omnifunc=javacomplete#Complete
 augroup END
 " }}}
 
