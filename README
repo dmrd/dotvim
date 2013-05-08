@@ -1,3 +1,5 @@
+My unnecessarily complex vimrc.  Needs a good cleaning.
+
 Install:
 git clone git://github.com/dmrd/dotvim.git ~/.vim
 

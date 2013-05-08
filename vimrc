@@ -23,7 +23,7 @@ syntax on
 set hidden
 
 "Number of spaces a tab ('\t') is shown as
-set tabstop=8
+set tabstop=4
 "Number spaces to use per step of autoindent (<< >> cindent)
 set shiftwidth=4
 "Number of spaces pressing tab inserts
@@ -108,7 +108,7 @@ set autochdir
 
 " Tags ----------------------------------------------- {{{
 "Check these directories for tag files
-set tags+=~/vim/tags/;
+set tags+=~/.vim/tags/;
 " }}}
 
 " Wildmenu ---------------------------------------------{{{
@@ -149,9 +149,9 @@ nnoremap <leader><space> :noh<cr>
 
 set undofile
 set undoreload=100000
-set undodir=~/.vim/tmp/undo//     " undo files
-set backupdir=~/.vim/tmp/backup// " backups
-set directory=~/.vim/tmp/swap//   " swap files
+set undodir=~/.vim/tmp/undo/     " undo files
+set backupdir=~/.vim/tmp/backup/ " backups
+set directory=~/.vim/tmp/swap/   " swap files
 set backup                        " enable backups - may not be really needed
 set noswapfile
 "}}}
@@ -174,8 +174,9 @@ nnoremap z0 zCz0
 " These commands open folds
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
-"Default fold method --- use the three braces ({{{  }}})
-setlocal foldmethod=marker
+"Default fold method --- marker is use the three braces ({{{  }}})
+" indent is use same indent level as fold group
+setlocal foldmethod=syntax
 
 " }}}
 
@@ -411,47 +412,6 @@ nmap <silent> <C-\> :Ggrep <cword><CR>:copen<CR>
 
 "Language bindings --------------------------------------- {{{
 
-" C {{{
-augroup ft_c
-    au!
-    au FileType c setlocal foldmethod=syntax
-augroup END
-" }}}
-
-" Cpp {{{
-augroup ft_cpp
-    au!
-    au FileType cpp setlocal foldmethod=syntax
-    " set include=^\\s*#\\s*include\ \\(<boost/\\)\\@!
-augroup END
-" }}}
-
-" Haskell {{{
-augroup ft_haskell
-    au!
-    au BufEnter *.hs compiler ghc
-augroup END
-let g:haddock_browser = "chromium"
-let g:ghc = "/usr/bin/ghc"
-" }}}
-
-" Java {{{
-augroup ft_java
-    au!
-    au FileType java setlocal foldmethod=syntax
-    au FileType java setlocal foldmarker={,}
-    "au FileType java setlocal omnifunc=javacomplete#Complete
-augroup END
-" }}}
-
-" Javascript {{{
-augroup ft_javascript
-    au!
-    au FileType javascript setlocal foldmethod=syntax
-    au FileType javascript setlocal foldmarker={,}
-augroup END
-" }}}
-
 " Python {{{
 augroup ft_python
     au!
@@ -468,38 +428,12 @@ augroup ft_vim
 augroup END
 " }}}
 
-" Org stuff {{{
-augroup ft_org
-    "Need emacs --daemon running
-    au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
-    au BufEnter *.org            call org#SetOrgFileType()
-    au FileType org              set spell
-    let g:org_command_for_emacsclient = 'emacsclient'
-
-    let g:org_capture_file = '/mnt/data/Dropbox/org/captures.org'
-    command! OrgCapture :call org#CaptureBuffer()
-    command! OrgCaptureFile :call org#OpenCaptureFile()
-
-    let g:org_agenda_select_dirs = ["/mnt/data/Dropbox/org/"]
-    let g:org_agenda_files = split(glob("/mnt/data/Dropbox/org/*.org"),"\n")
-    let g:org_agenda_window_position = 'right'
-
-    "nnoremap <leader>c :OrgCapture<cr>
-    "nnoremap <leader>o :OrgCaptureFile<cr>
-    "au BufEnter *.org :1SpeedDatingFormat %Y-%m-%d %a
-    "This is rather buggy...
-    let g:org_mobile_directory = ["/mnt/data/Dropbox/org/mobile"]
-    let g:org_mobile_files = ["/mnt/data/Dropbox/main.org"]
-    let g:org_mobile_inbox_for_pull = ["/mnt/data/Dropbox/org/mobile/from-mobile.org"]
-augroup END
-
-" ocaml {{{
+" OCaml {{{
 augroup ft_ocaml
     call SingleCompile#SetCompilerTemplate('ocaml', 'ocamlc', 'OCaml Bytecode Compiler',
                 \'ocamlc', '-o $(FILE_TITLE)$', '')
 augroup END
 
-" }}}
 " }}}
 
 
