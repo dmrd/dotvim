@@ -8,7 +8,7 @@ def FlagsForFile(filename):
     vim.command("set noautochdir")
     vim.command("cd " + os.path.dirname(filename))
     filetype = vim.eval("&filetype")
-    names = [".coptions", ".clang_complete", ".coptions", "cppoptions", "cxxoptions"]
+    names = [".coptions", ".clang_complete", ".coptions", ".cppoptions", ".cxxoptions"]
     cdir = os.path.abspath(os.getcwd())
     found = None
     while found == None and len(cdir) > 1:
