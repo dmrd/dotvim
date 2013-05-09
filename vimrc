@@ -73,6 +73,7 @@ set textwidth=79
 set formatoptions=qrn1
 "Highlight the column, match with max line length
 set colorcolumn=80
+hi ColorColumn ctermbg=lightgrey guibg=DarkSlateGray
 "Do not scroll windows together
 set noscrollbind
 
@@ -151,9 +152,9 @@ set undofile
 set undoreload=100000
 set undodir=~/.vim/tmp/undo/     " undo files
 set backupdir=~/.vim/tmp/backup/ " backups
-set directory=~/.vim/tmp/swap/   " swap files
-set backup                        " enable backups - may not be really needed
+set directory=~/.vim/tmp/swap/   " swap file location
 set noswapfile
+set backup                       " enable backups
 "}}}
 
 " Folding -----------------------------------------------{{{
@@ -192,6 +193,7 @@ set ttimeout
 set ttimeoutlen=10
 set showcmd
 
+"These do not work in terminal Vim
 "save file
 map <C-s> :w<CR>
 "Quit
@@ -305,7 +307,6 @@ nnoremap <leader>f :CtrlPMixed<cr>
 nnoremap <Leader>b :CtrlPBuffer<cr>
 "Goto [t]ag
 nnoremap <Leader>t :CtrlPBufTagAll<cr>
-"let g:ctrlp_user_command = "find %s -type f | egrep -v '/\.(git|hg|svn)|solr|tmp/' | egrep -v '\.(png|exe|jpg|gif|jar|class|swp|swo|log|gitkep|keepme|so|o)$'"
 
 "my [to]do list in each file
 map <Leader>d <Plug>TaskList
@@ -313,10 +314,6 @@ map <Leader>d <Plug>TaskList
 " alignment plugin
 nmap <leader>a= :Tab assignment<cr>
 vmap <leader>a= :Tab assignment<cr>
-
-"TODO: Learn how to properly use this for Haskell
-"let g:slime_target = "tmux"
-"let g:slime_target = "screen"
 
 " when to enable large file plugin in MB
 let g:LargeFile=10
@@ -333,10 +330,6 @@ map <F11> :TagbarToggle<cr>
 
 map <F12> :make -j8
 
-" xolox/vim-session
-"nnoremap <leader>ss :SaveSession 
-"nnoremap <leader>so :OpenSession 
-
 "Ack is awesome with quickfix window
 nnoremap <leader>a :Ack 
 
@@ -349,47 +342,11 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 "Toggle rainbow parens - Should make more vibrant
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
 
-" Outline all buffers
-"nnoremap <leader>uo :Unite outline<cr>
-"nnoremap <leader>uu :Unite 
-
-"common word movements work on camel case words
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
-
 " Use ; instead of ,, for easymotion
 let g:EasyMotion_leader_key = ';'
-
-"set cpo-=<
-"set wcm=<C-Z>
-"map <F4> :emenu <C-Z>
-
-"Nerdtree if no arguments given
-"autocmd vimenter * if !argc() | NERDTree | endif
-
-" Vimux {{{
-"" Prompt for a command to run
-"nmap <leader>rp :PromptVimTmuxCommand<CR>
-
-"" Run last command executed by RunVimTmuxCommand
-"nmap <leader>rl :RunLastVimTmuxCommand<CR>
-
-"" Close all other tmux panes in current window
-"nmap <leader>rx :CloseVimTmuxPanes<CR>
-
-"" Kill any command running in the runner pane
-"map <leader>rk :InterruptVimTmuxRunner<CR>
-
-"" If text is selected, save it in the v buffer and send to tmux
-"vmap <Leader>rs "vy:call VimuxRunCommand(@v . "\n", 0)<CR>
-
-"" Select current paragraph and send it to tmux
-"nmap <Leader>rs vip<Leader>rs<CR>
-"" }}}
+" I never use s/S, so remap to easymotion forward/backward
+nmap s ;w
+nmap S ;b
 
 " Fugitive {{{
 let g:extradite_width = 60
@@ -435,6 +392,5 @@ augroup ft_ocaml
 augroup END
 
 " }}}
-
 
 " }}}

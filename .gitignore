@@ -1,6 +1,7 @@
 *.swp
 *.un
 *.~
+*.pyc
 bundle/*
 !bundle/vundle
 !bundle/vundle/*
