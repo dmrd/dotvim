@@ -3,7 +3,6 @@
 
 "Init -----------------------------------------------{{{
 set nocompatible "It's not vi!
-filetype off
 
 "Load vundle plugins
 source ~/.vim/plugins.vim
@@ -14,7 +13,7 @@ filetype plugin indent on
 set encoding=utf-8
 set modelines=0
 
-set updatetime=4000
+set updatetime=1000
 
 "Misc settings for usability
 
@@ -177,7 +176,7 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 "Default fold method --- marker is use the three braces ({{{  }}})
 " indent is use same indent level as fold group
-setlocal foldmethod=syntax
+set foldmethod=syntax
 
 " }}}
 
@@ -287,6 +286,9 @@ let g:LustyExplorerDefaultMappings=0
 
 " Misc & mappings ---------------------------- {{{
 
+" Close the quickfix window that often opens on startup
+autocmd VimEnter * cw
+
 " Write as sudo
 cmap w!! w !sudo tee % >/dev/null
 
@@ -328,7 +330,7 @@ nmap <F10> :SingleCompileRun<CR>
 "Tagbar for tag navigation
 map <F11> :TagbarToggle<cr>
 
-map <F12> :make -j8
+map <F12> :make -j8 | copen
 
 "Ack is awesome with quickfix window
 nnoremap <leader>a :Ack 

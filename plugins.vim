@@ -1,4 +1,5 @@
 "Vundle plugin file.  Divided into many ambiguous categoris
+filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 "Package management
@@ -9,7 +10,7 @@ Bundle 'vundle'
 Bundle 'Lokaltog/vim-easymotion'
 
 "Essentially a tab view for buffers (not the same as the built in tabs)
-Bundle 'fholgado/minibufexpl.vim'
+"Bundle 'fholgado/minibufexpl.vim'
 "Allow jumping to to buffers easily - ,lj
 Bundle 'sjbach/lusty'
 "File explorer   - ,n
@@ -42,13 +43,14 @@ Bundle 'ZoomWin'
 Bundle 'bufkill.vim'
 " }}}
 
-"Code utils (compile/checker/comment/search/tags)------------------------{{{
+"Code utils (debug/compile/checker/comment/search/tags)------------------------{{{
 "Build a single file. Very easy to use without make. Awesome plugin! - f9, f10
 Bundle 'xuhdev/SingleCompile'
 
 "Automatic syntax/code checker - checks on write
 Bundle 'scrooloose/syntastic'
 let g:syntastic_auto_loc_list=1
+"Bundle 'xieyu/pyclewn'
 
 "Ack integration   -  ,a
 Bundle 'mileszs/ack.vim'
@@ -63,10 +65,10 @@ Bundle 'godlygeek/tabular'
 Bundle 'majutsushi/tagbar'
 
 "Check to make this is working properly and not updating too often
-"Bundle 'xolox/vim-easytags'
-"let g:easytags_file = "~/.vim/tags/easyTags"
-"let g:easytags_dynamic_files = 1
-"let g:easytags_updatetime_autodisable=1
+Bundle 'xolox/vim-easytags'
+let g:easytags_file = "~/.vim/tags/easyTags"
+let g:easytags_dynamic_files = 1
+let g:easytags_updatetime_autodisable=1
 
 "}}}
 
@@ -90,7 +92,7 @@ let g:ycm_confirm_extra_conf = 0
 """let g:SuperTabDefaultCompletionType='context'
 
 "Like snipmate but better
-Bundle 'SirVer/ultisnips'
+"Bundle 'SirVer/ultisnips'
 " }}}
 
 " Git ---------------------------------------------{{{
@@ -108,6 +110,8 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'kien/rainbow_parentheses.vim'
 "Cool status bar
 Bundle 'Lokaltog/vim-powerline'
+
+Bundle 'noahfrederick/Hemisu'
 " }}}
 
 " Filetype specific -------------------------------------{{{
