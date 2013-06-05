@@ -9,8 +9,15 @@ Bundle 'vundle'
 "Jumping long distances - ;w/e/b - also mapped to s/S
 Bundle 'Lokaltog/vim-easymotion'
 
-"Essentially a tab view for buffers (not the same as the built in tabs)
-"Bundle 'fholgado/minibufexpl.vim'
+"w/b/e pay attention to word capitalization
+"Bundle 'camelcasemotion'
+"map w <Plug>CamelCaseMotion_w 
+"map b <Plug>CamelCaseMotion_b 
+"map e <Plug>CamelCaseMotion_e 
+"sunmap w 
+"sunmap b 
+"sunmap e 
+
 "Allow jumping to to buffers easily - ,lj
 Bundle 'sjbach/lusty'
 "File explorer   - ,n
@@ -22,6 +29,7 @@ let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+
 "Clipboard manager
 Bundle 'YankRing.vim'
 "
@@ -50,6 +58,8 @@ Bundle 'xuhdev/SingleCompile'
 "Automatic syntax/code checker - checks on write
 Bundle 'scrooloose/syntastic'
 let g:syntastic_auto_loc_list=1
+
+"Vim frontend for python debugging
 "Bundle 'xieyu/pyclewn'
 
 "Ack integration   -  ,a
@@ -64,11 +74,11 @@ Bundle 'godlygeek/tabular'
 "Tags - f11
 Bundle 'majutsushi/tagbar'
 
-"Check to make this is working properly and not updating too often
-Bundle 'xolox/vim-easytags'
-let g:easytags_file = "~/.vim/tags/easyTags"
-let g:easytags_dynamic_files = 1
-let g:easytags_updatetime_autodisable=1
+"Check to make sure this is working properly and not updating too often
+"Bundle 'xolox/vim-easytags'
+"let g:easytags_file = "~/.vim/tags/easyTags"
+"let g:easytags_dynamic_files = 1
+"let g:easytags_updatetime_autodisable=1
 
 "}}}
 
@@ -77,19 +87,6 @@ let g:easytags_updatetime_autodisable=1
 Bundle 'Valloric/YouCompleteMe'
 let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
-"""" Cpp completion
-"""Bundle 'Rip-Rip/clang_complete'
-"""
-"""" Python completion
-"""Bundle 'davidhalter/jedi-vim'
-"""let g:jedi#related_names_command = "<leader>jn"
-"""let g:jedi#rename_command = "<leader>jr"
-"""let g:jedi#get_definition_command = "<leader>jd"
-"""let g:jedi#goto_command = "<leader>jg"
-"""
-""""Completion from other words in buffer - trigger autocompletion
-"""Bundle 'ervandew/supertab'
-"""let g:SuperTabDefaultCompletionType='context'
 
 "Like snipmate but better
 "Bundle 'SirVer/ultisnips'
@@ -122,11 +119,22 @@ Bundle 'jcf/vim-latex'
 imap <m-J> <Plug>IMAP_JumpForward
 nmap <m-J> <Plug>IMAP_JumpForward
 
-"Interface to emacs org-mode - .org
+" Interface to emacs org-mode - .org
 Bundle 'hsitz/VimOrganizer'
 
-"Simple wiki systems - Configured for markdown
+" Simple wiki systems - Configured for markdown
 Bundle 'vimwiki'
+
+" Preview markdown files in browser
+Bundle 'suan/vim-instant-markdown'
+
+" Python style checking
+Bundle 'klen/python-mode'
+
+"Bundle 'slimv.vim'
+"let g:slimv_preferred='mit'
+"let g:slimv_leader='\'
+"let g:scheme_builtin_swank
 
 " }}}
 

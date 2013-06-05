@@ -19,9 +19,9 @@ def FlagsForFile(filename):
                 break
         cdir = os.path.dirname(cdir)
     if found != None:
-        print("Found: " + found)
+        #print("Found: " + found)
         vim.command("pwd")
-        print(os.path.dirname(found))
+        #print(os.path.dirname(found))
         vim.command("cd " + os.path.dirname(found))
         vim.command("pwd")
 
@@ -29,7 +29,7 @@ def FlagsForFile(filename):
         flags =  [line.strip() for line in open(found, 'r')]
     except:
         flags = []
-    
+
     flags = [line.strip() for line in flags]
 
     if filetype == 'c':

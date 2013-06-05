@@ -6,3 +6,4 @@ bundle/*
 !bundle/vundle
 !bundle/vundle/*
 local
+UltiSnips

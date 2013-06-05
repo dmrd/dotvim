@@ -10,6 +10,8 @@ source ~/.vim/plugins.vim
 " Basic options & behaviors -----------------------------------------------{{{
 filetype plugin indent on
 
+set shell=sh
+
 set encoding=utf-8
 set modelines=0
 
@@ -41,6 +43,7 @@ set novisualbell
 set cursorline
 "Increases smoothness - fast terminal
 set ttyfast
+
 "Show current line/column in statusbar
 set ruler
 "Can backspace over autoindents, linebreaks (join lines), and start of insert
@@ -127,6 +130,10 @@ set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*~
 set wildignore+=*/.vim/tmp/*
+
+set cpo-=<
+set wcm=<C-Z>
+map <F6> :emenu <C-Z>
 
 " }}}
 
@@ -224,10 +231,6 @@ nnoremap <leader>h <C-w>s<C-w>j
 "to paste: "+p or "*p
 "to copy:  "+yy or "*yy
 
-"Toggle line numbers - relative good for jumping
-nnoremap <leader>lr :setlocal relativenumber!<cr>
-nnoremap <leader>la :setlocal number!<cr>
-
 " }}}
 
 "Appearances -----------------------------------------------{{{
@@ -270,11 +273,11 @@ map <C-h> <C-w>h
 map <C-l> <C-w>l
 
 map <F1> :bprevious<CR>
-"Overidden by yankring
-map <C-p> :bprevious<CR>
 map <F2> :bnext<CR>
-"Ditto on yankring
-map <C-n> :bnext<CR>
+
+" Possibly overridden by yankring
+map <C-p> :tabprevious<CR>
+map <C-n> :tabnext<CR>
 
 "Useful plugin for fast switching - default ,lj
 "nnoremap <Leader>b LustyJuggler<cr>
@@ -285,6 +288,7 @@ let g:LustyExplorerDefaultMappings=0
 " }}}
 
 " Misc & mappings ---------------------------- {{{
+
 
 " Close the quickfix window that often opens on startup
 autocmd VimEnter * cw
