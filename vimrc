@@ -5,6 +5,7 @@
 set nocompatible "It's not vi!
 
 "Load vundle plugins
+let mapleader = ','
 source ~/.vim/plugins.vim
 
 " Basic options & behaviors -----------------------------------------------{{{
@@ -38,7 +39,8 @@ set autoindent
 set showmode
 set showcmd
 "No flashing.
-set novisualbell
+set vb
+set noerrorbells
 "Highlight current screen line
 set cursorline
 "Increases smoothness - fast terminal
@@ -74,7 +76,7 @@ set textwidth=79
 "1: Don't break line after 1 letter words
 set formatoptions=qrn1
 "Highlight the column, match with max line length
-set colorcolumn=80
+set colorcolumn=100
 hi ColorColumn ctermbg=lightgrey guibg=DarkSlateGray
 "Do not scroll windows together
 set noscrollbind
@@ -201,9 +203,12 @@ set showcmd
 
 "These do not work in terminal Vim
 "save file
-map <C-s> :w<CR>
+"map <C-s> :w<CR>
 "Quit
 map <C-q> :q<CR>
+
+" Close quickfix
+nnoremap <leader>cw :ccl<CR> :lcl<CR>
 
 "Clear whitespace in file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
@@ -237,7 +242,7 @@ nnoremap <leader>h <C-w>s<C-w>j
 "Get some color in here
 syntax on
 
-set guifont=Inconsolata\ Medium\ 12
+"set guifont=Inconsolata\ Medium\ 12
 " Remove toolbar
 set guioptions-=T
 " Remove menu
@@ -261,7 +266,8 @@ if has("gui_running")
 else
     "Terminal colorscheme
     try
-        colorscheme zenburn
+        colorscheme desert
+        "colorscheme zenburn
     endtry
 end
 " }}}
@@ -272,12 +278,13 @@ map <C-k> <C-w>k
 map <C-h> <C-w>h
 map <C-l> <C-w>l
 
+
 map <F1> :bprevious<CR>
 map <F2> :bnext<CR>
 
-" Possibly overridden by yankring
-map <C-p> :tabprevious<CR>
-map <C-n> :tabnext<CR>
+"Switching tabs similar to in browsers/other apps
+map <C-S-tab> :tabprevious<CR>
+map <C-tab> :tabnext<CR>
 
 "Useful plugin for fast switching - default ,lj
 "nnoremap <Leader>b LustyJuggler<cr>
@@ -309,9 +316,9 @@ nnoremap <F4> :GundoToggle<CR>
 "command-t entirely in vim script
 "Search files - [F]ind
 nnoremap <leader>f :CtrlPMixed<cr>
-"Switch [b]uffers
+""Switch [b]uffers
 nnoremap <Leader>b :CtrlPBuffer<cr>
-"Goto [t]ag
+""Goto [t]ag
 nnoremap <Leader>t :CtrlPBufTagAll<cr>
 
 "my [to]do list in each file
@@ -343,7 +350,7 @@ nnoremap <leader>a :Ack
 nnoremap <leader><tab> :Scratch<cr>
 
 "Open NERDTree
-nnoremap <leader>n :NERDTreeToggle<cr>
+nnoremap <leader>n :NERDTreeToggle . <CR>
 
 "Toggle rainbow parens - Should make more vibrant
 nnoremap <leader>R :RainbowParenthesesToggle<cr>
@@ -365,7 +372,7 @@ nmap <silent> <C-\> :Ggrep <cword><CR>:copen<CR>
 " }}}
 
 " VimWiki {{{
-    let g:vimwiki_list = [{'path': '~/dropbox/wiki',
+    let g:vimwiki_list = [{'path': '~/Dropbox (ritt93@gmail.com)/wiki',
                             \ 'syntax': 'markdown',
                             \ 'ext': '.md'}]
     autocmd BufNewFile,BufRead *.md set syntax=markdown
@@ -375,8 +382,25 @@ nmap <silent> <C-\> :Ggrep <cword><CR>:copen<CR>
 
 "Language bindings --------------------------------------- {{{
 
+" Strip whitespace
+fun! StripTrailingWhitespace()
+    " Only strip if the b:noStripeWhitespace variable isn't set
+    if exists('b:noStripWhitespace')
+        return
+    endif
+    %s/\s\+$//e
+endfun
+autocmd BufWritePre * call StripTrailingWhitespace()
+autocmd FileType vim let b:noStripWhitespace=1
+
+" Autocompletions
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType scss set omnifunc=csscomplete#CompleteCSS
+
 " Python {{{
-augroup ft_python
+augroup filetype_python
     au!
     au FileType python setlocal foldmethod=indent
     au Filetype python setlocal foldnestmax=2
@@ -384,7 +408,7 @@ augroup END
 " }}}
 
 " Vim {{{
-augroup ft_vim
+augroup filetype_vim
     au!
     au FileType vim setlocal foldmethod=marker
     au FileType help setlocal textwidth=78
@@ -392,11 +416,21 @@ augroup END
 " }}}
 
 " OCaml {{{
-augroup ft_ocaml
+augroup filetype_ocaml
     call SingleCompile#SetCompilerTemplate('ocaml', 'ocamlc', 'OCaml Bytecode Compiler',
                 \'ocamlc', '-o $(FILE_TITLE)$', '')
 augroup END
 
 " }}}
 
+augroup filetype_scss
+    au!
+    au FileType vim setlocal foldmethod=indent
+
+augroup END
+
+augroup filetype_coffee
+    au!
+    au FileType vim setlocal foldmethod=indent
+augroup END
 " }}}

@@ -5,9 +5,26 @@ call vundle#rc()
 "Package management
 Bundle 'vundle'
 
+"" Unite --------------------------------------------------------------{{{
+"Bundle 'Shougo/unite.vim'
+"" Unite
+"let g:unite_source_history_yank_enable = 1
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files buffer file_mru bookmark file_rec/async<CR>
+"" }}}
+
+
+
 "Text/buffer/file movements & actions ----------------------------------- {{{
 "Jumping long distances - ;w/e/b - also mapped to s/S
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'goldfeld/vim-seek'
+let g:SeekKey = 'f'
+let g:SeekBackKey = 'F'
+
+Bundle 'terryma/vim-multiple-cursors'
+" Mac specific mapping - equivalent to <C-a>
+let g:multi_cursor_next_key='å'
 
 "w/b/e pay attention to word capitalization
 "Bundle 'camelcasemotion'
@@ -18,6 +35,9 @@ Bundle 'Lokaltog/vim-easymotion'
 "sunmap b 
 "sunmap e 
 
+"Show marks in gutter, various good mappings
+Bundle 'kshenoy/vim-signature'
+
 "Allow jumping to to buffers easily - ,lj
 Bundle 'sjbach/lusty'
 "File explorer   - ,n
@@ -25,14 +45,14 @@ Bundle 'scrooloose/nerdtree'
 "Like command-T but uses only vimscript
 Bundle 'kien/ctrlp.vim'
 let g:ctrlp_use_caching = 1
-"Keep caches between sessions - f5 to refresh
+""Keep caches between sessions - f5 to refresh
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 
 "Clipboard manager
 Bundle 'YankRing.vim'
-"
+
 "Undo tree visualizer - f4
 Bundle 'sjl/gundo.vim'
 "
@@ -49,6 +69,14 @@ Bundle 'chrisbra/NrrwRgn'
 Bundle 'ZoomWin'
 "Kill buffers without closing splits/windows (capitalize normal commands)
 Bundle 'bufkill.vim'
+
+" Save and load sessions
+Bundle 'xolox/vim-session'
+nmap <leader>ss :SaveSession 
+nmap <leader>so :OpenSession 
+nmap <leader>sr :RestartVim<CR>
+let g:session_autoload=0
+
 " }}}
 
 "Code utils (debug/compile/checker/comment/search/tags)------------------------{{{
@@ -58,9 +86,6 @@ Bundle 'xuhdev/SingleCompile'
 "Automatic syntax/code checker - checks on write
 Bundle 'scrooloose/syntastic'
 let g:syntastic_auto_loc_list=1
-
-"Vim frontend for python debugging
-"Bundle 'xieyu/pyclewn'
 
 "Ack integration   -  ,a
 Bundle 'mileszs/ack.vim'
@@ -76,35 +101,52 @@ Bundle 'majutsushi/tagbar'
 
 "Check to make sure this is working properly and not updating too often
 "Bundle 'xolox/vim-easytags'
-"let g:easytags_file = "~/.vim/tags/easyTags"
-"let g:easytags_dynamic_files = 1
-"let g:easytags_updatetime_autodisable=1
+let g:easytags_file = "~/.vim/tags/easyTags"
+let g:easytags_dynamic_files = 1
+let g:easytags_updatetime_autodisable=1
 
+" Autodetect indent levels
+Bundle 'tpope/vim-sleuth'
+
+Bundle 'nathanaelkane/vim-indent-guides'
 "}}}
 
 " Completion ---------------------------------------------{{{
 " Autocompletion - requires manual compilation
-Bundle 'Valloric/YouCompleteMe'
-let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
+if has("gui_running")
+  Bundle 'Valloric/YouCompleteMe'
+  let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+  let g:ycm_confirm_extra_conf = 0
+  let g:ycm_key_invoke_completion = '<C-w>'
+  let g:ycm_key_list_previous_completion=['<Up>']
+  " Go to where something is defined locally (imported etc.)
+  nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+  " Go to where something is defined/created
+  nnoremap <leader>jl :YcmCompleter GoToDeclaration<CR>
 
-"Like snipmate but better
-"Bundle 'SirVer/ultisnips'
+  "Like snipmate but better
+  "Bundle 'SirVer/ultisnips'
+  "let g:UltiSnipsExpandTrigger="<C-J>"
+
+
+end
+
 " }}}
 
-" Git ---------------------------------------------{{{
+" VCS ---------------------------------------------{{{
+"HG integration
+Bundle 'phleet/vim-mercenary'
+
 "Git integration
 Bundle 'tpope/vim-fugitive'
 " Extends fugitive
 Bundle 'int3/vim-extradite'
-"Show git changes
-Bundle 'airblade/vim-gitgutter'
+
+" VCS gutter
+Bundle 'mhinz/vim-signify'
 " }}}
 
 " Appearance --------------------------------------{{{
-"Color matching parens various colors
-"Limited usability, may get rid of  - ,R
-Bundle 'kien/rainbow_parentheses.vim'
 "Cool status bar
 Bundle 'Lokaltog/vim-powerline'
 
@@ -127,14 +169,27 @@ Bundle 'vimwiki'
 
 " Preview markdown files in browser
 Bundle 'suan/vim-instant-markdown'
+" .md settings
+Bundle 'tpope/vim-markdown'
 
-" Python style checking
-Bundle 'klen/python-mode'
+Bundle 'ap/vim-css-color'
 
-"Bundle 'slimv.vim'
-"let g:slimv_preferred='mit'
-"let g:slimv_leader='\'
-"let g:scheme_builtin_swank
+" Python {{{
+" Python style checking integrated into syntastic
+let g:syntastic_python_checkers = ['pyflakes']
+
+" Better python indentation style
+Bundle 'indentpython.vim'
+
+Bundle 'johndgiese/vipy'
+" }}}
+
+
+" Web {{{
+Bundle 'kchmck/vim-coffee-script'
+
+Bundle 'tpope/vim-haml'
+" }}}
 
 " }}}
 
@@ -146,5 +201,9 @@ Bundle 'TaskList.vim'
 Bundle 'utl.vim'
 ",<tab> opens scratch buffer
 Bundle 'scratch.vim'
+
+" Xolox util functions
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-shell'
 " }}} 
 " }}}

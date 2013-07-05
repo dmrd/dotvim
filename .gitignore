@@ -2,6 +2,7 @@
 *.un
 *.~
 *.pyc
+spell
 bundle/*
 !bundle/vundle
 !bundle/vundle/*
